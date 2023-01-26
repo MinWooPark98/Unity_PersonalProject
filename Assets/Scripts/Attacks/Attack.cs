@@ -4,42 +4,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public abstract class Attack : MonoBehaviour, IAttackable
+public abstract class Attack : MonoBehaviour
 {
     [SerializeField] protected AttackBase attackBase;
-    public int savedCount;
-    protected float saveTimer;
-    protected bool isInCoolDown = false;
-    protected float coolTimer;
+    protected AttackFollowUp followUp;
     public Action EndAttack;
 
     private void Start()
     {
-        savedCount = attackBase.maxSave;
+        if (attackBase == null)
+            return;
+        switch (attackBase.followUp)
+        {
+            case AreaAttackBase:
+                followUp = new AreaAttack();
+                break;
+            case SummonBase:
+                break;
+        }
     }
 
-    private void Update()
+    public abstract void Execute(Transform attackPivot, Vector3 dir, float distanceRatio);
+
+    protected void FinishAttack()
     {
-        if (savedCount < attackBase.maxSave)
-        {
-            saveTimer += Time.deltaTime;
-            if (saveTimer >= attackBase.saveDelay)
-            {
-                saveTimer = 0f;
-                ++savedCount;
-            }
-        }
-
-        if (isInCoolDown)
-        {
-            coolTimer += Time.deltaTime;
-            if (coolTimer >= attackBase.coolDown)
-            {
-                coolTimer = 0f;
-                isInCoolDown = false;
-            }
-        }
+        StartCoroutine(CoFinishAttack());
     }
 
-    public virtual bool Execute(Transform attackPivot, Vector3 dir, float distanceRatio) => savedCount >= 1;
+    private IEnumerator CoFinishAttack()
+    {
+        if (EndAttack != null)
+        {
+            yield return new WaitForSeconds(attackBase.actionTime);
+            EndAttack();
+        }
+    }
 }

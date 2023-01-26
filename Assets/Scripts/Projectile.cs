@@ -15,7 +15,7 @@ public class Projectile : MonoBehaviour
     private bool isPenetrable = true;
     private bool isParabolic = false;
     private float height = 0f;
-    private UnityEvent followAttack;
+    private AttackFollowUp followAttack;
     private Rigidbody rb;
     private LinkedList<GameObject> hitObjects = new LinkedList<GameObject>();
 
@@ -32,10 +32,10 @@ public class Projectile : MonoBehaviour
 
     private void OnDisable()
     {
-        followAttack?.Invoke();
+        followAttack?.Execute(transform.position);
     }
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, float arrivalTime, float distance, int damage, UnityEvent followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
         this.attacker = attacker;
         this.startPos = startPos;
@@ -62,6 +62,7 @@ public class Projectile : MonoBehaviour
         {
             Vector3 dir = direction;
             rb.velocity = dir * distance / arrivalTime;
+            transform.LookAt(dir);
         }
     }
 

@@ -12,7 +12,7 @@ public class PlayerController : MonoBehaviour
     private Animator animator;
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
-    [SerializeField] private Attack attack;
+    [SerializeField] private BasicAttackController basicController;
     public Transform attackPivot;
     private bool isAttacking = false;
 
@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
-        //attack.EndAttack = SetAttacking;
+        basicController.attack.EndAttack = EndAttack;
     }
 
     void Update()
@@ -42,12 +42,16 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Attack(Vector3 dir, float ratio)   // 임시 삭제 예정
+    public void Attack(Vector3 dir, float ratio)
     {
-        SetAttacking(true);
+        if (!basicController.attackable)
+            return;
         transform.rotation = Quaternion.LookRotation(dir);
-        attack.Execute(attackPivot, dir, ratio);
+        SetAttacking(true);
+        basicController.ExecuteAttack(attackPivot, dir, ratio);
     }
+
+    private void EndAttack() => SetAttacking(false);
 
     private void SetAttacking(bool isAttacking)
     {
