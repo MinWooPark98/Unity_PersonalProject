@@ -8,6 +8,7 @@ public abstract class Attack : MonoBehaviour
 {
     [SerializeField] protected AttackBase attackBase;
     protected AttackFollowUp followUp;
+    public Action DoAttack;
     public Action EndAttack;
 
     private void Start()

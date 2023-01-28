@@ -909,7 +909,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1805879165}
         m_TargetAssemblyTypeName: PlayerController, Assembly-CSharp
-        m_MethodName: Attack
+        m_MethodName: BasicAttack
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -957,17 +957,12 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1795186964}
   m_CullTransparentMesh: 1
---- !u!1 &1805879162 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1343755915957405032, guid: 4a236c9961576584b99d833309bff122, type: 3}
-  m_PrefabInstance: {fileID: 1906180225}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1805879165 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
   m_PrefabInstance: {fileID: 1906180225}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805879162}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 33243c75beb1cde48957a950ff19ab95, type: 3}
@@ -978,19 +973,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1343755915957405030, guid: 4a236c9961576584b99d833309bff122, type: 3}
   m_PrefabInstance: {fileID: 1906180225}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1805879174
+--- !u!114 &1805879173 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 2069754588339344192, guid: 4a236c9961576584b99d833309bff122, type: 3}
+  m_PrefabInstance: {fileID: 1906180225}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1805879162}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8b0b1d989924a8d4caf0cd64479665ed, type: 3}
+  m_Script: {fileID: 11500000, guid: 8db832a7d333cb3468604dfdecf9ffb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackBase: {fileID: 11400000, guid: 5b8d958970dfb95488a6ce95a3cb0f2a, type: 2}
 --- !u!1 &1891706356
 GameObject:
   m_ObjectHideFlags: 0
@@ -1150,10 +1143,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: Veteran
       objectReference: {fileID: 0}
+    - target: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: basicAttackAnimName
+      value: BasicAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: basicAttackAnimIsLoop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2168215906284898985, guid: 4a236c9961576584b99d833309bff122, type: 3}
       propertyPath: attack
       value: 
-      objectReference: {fileID: 1805879174}
+      objectReference: {fileID: 1805879173}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a236c9961576584b99d833309bff122, type: 3}
 --- !u!1 &1915835457

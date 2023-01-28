@@ -16,6 +16,8 @@ public class RangeAttack : Attack
             var newDistance = thisBase.distance * distanceRatio * Random.Range(0.9f, 1.1f);
             pro.Set(gameObject, attackPivot.position, newDir, thisBase.arrivalTime, newDistance, thisBase.damage, followUp, thisBase.isPenetrable);
         }
+        if (DoAttack != null)
+            DoAttack();
         FinishAttack();
     }
 }

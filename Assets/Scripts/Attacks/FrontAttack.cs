@@ -17,6 +17,8 @@ public class FrontAttack : Attack
         {
             var pro = Instantiate(attackBase.projectile);
             pro.Set(gameObject, attackPivot.position, dir, thisBase.arrivalTime, thisBase.distance * distanceRatio, thisBase.damage, followUp, thisBase.isPenetrable);
+            if (DoAttack != null)
+                DoAttack();
             ++count;
             if (count >= thisBase.maxCount)
                 break;

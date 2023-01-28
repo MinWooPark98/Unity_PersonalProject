@@ -5,7 +5,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     public static readonly int HashMove = Animator.StringToHash("isMoving");
-    public static readonly int HashAttack = Animator.StringToHash("isAttacking");
+    public static readonly int HashEndAttack = Animator.StringToHash("endAttack");
 
     private Rigidbody rb;
     private PlayerInput playerInput;
@@ -13,6 +13,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float speed = 5f;
     [SerializeField] private float rotateSpeed = 5f;
     [SerializeField] private BasicAttackController basicController;
+    [SerializeField] private SkillAttackController skillController;
+
+    [SerializeField] private string basicAttackAnimName;
+    [SerializeField] private bool basicAttackAnimIsLoop;
+    [SerializeField] private string skillAttackAnimName;
+    [SerializeField] private bool skillAttackAnimIsLoop;
+
     public Transform attackPivot;
     private bool isAttacking = false;
 
@@ -22,6 +29,7 @@ public class PlayerController : MonoBehaviour
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
         basicController.attack.EndAttack = EndAttack;
+        basicController.attack.DoAttack = BasicAttackAnimPlay;
     }
 
     void Update()
@@ -42,20 +50,43 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void Attack(Vector3 dir, float ratio)
+    public void BasicAttack(Vector3 dir, float ratio)
     {
         if (!basicController.attackable)
             return;
         transform.rotation = Quaternion.LookRotation(dir);
-        SetAttacking(true);
+        isAttacking = true;
         basicController.ExecuteAttack(attackPivot, dir, ratio);
     }
 
-    private void EndAttack() => SetAttacking(false);
-
-    private void SetAttacking(bool isAttacking)
+    public void BasicAttackAnimPlay()
     {
-        this.isAttacking = isAttacking;
-        animator.SetBool(HashAttack, isAttacking);
+        if (basicAttackAnimIsLoop &&
+            animator.GetCurrentAnimatorStateInfo(0).IsName(basicAttackAnimName))
+            return;
+        animator.Play(basicAttackAnimName);
+    }
+
+    public void SkillAttack(Vector3 dir, float ratio)
+    {
+        if (!basicController.attackable)
+            return;
+        transform.rotation = Quaternion.LookRotation(dir);
+        isAttacking = true;
+        basicController.ExecuteAttack(attackPivot, dir, ratio);
+    }
+
+    public void SkillAttackAnimPlay()
+    {
+        if (skillAttackAnimIsLoop &&
+            animator.GetCurrentAnimatorStateInfo(0).IsName(skillAttackAnimName))
+            return;
+        animator.Play(skillAttackAnimName);
+    }
+
+    private void EndAttack()
+    {
+        isAttacking = false;
+        animator.SetTrigger(HashEndAttack);
     }
 }
