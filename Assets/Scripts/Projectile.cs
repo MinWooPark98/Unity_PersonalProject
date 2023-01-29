@@ -77,7 +77,7 @@ public class Projectile : MonoBehaviour
             return;
         hitObjects.AddLast(other.gameObject);
 
-        var subject = other.GetComponent<IDamageable>();
+        var subject = other.GetComponent<Health>();
         if (subject == null)
         {
             Destroy(gameObject);
