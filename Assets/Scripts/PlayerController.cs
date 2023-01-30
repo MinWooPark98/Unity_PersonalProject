@@ -52,7 +52,7 @@ public class PlayerController : MonoBehaviour
 
     public void BasicAttack(Vector3 dir, float ratio)
     {
-        if (!basicController.attackable)
+        if (isAttacking || !basicController.attackable)
             return;
         transform.rotation = Quaternion.LookRotation(dir);
         isAttacking = true;
@@ -69,7 +69,7 @@ public class PlayerController : MonoBehaviour
 
     public void SkillAttack(Vector3 dir, float ratio)
     {
-        if (!basicController.attackable)
+        if (isAttacking || !basicController.attackable)
             return;
         transform.rotation = Quaternion.LookRotation(dir);
         isAttacking = true;

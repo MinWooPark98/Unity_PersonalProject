@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: VeteranBasicAttackController
   m_EditorClassIdentifier: 
   maxSave: 3
-  saveDelay: 5
+  saveDelay: 3
   coolDown: 0.75

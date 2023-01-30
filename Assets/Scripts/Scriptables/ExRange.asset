@@ -16,7 +16,7 @@ MonoBehaviour:
   arrivalTime: 1
   damage: 3
   isPenetrable: 1
-  actionTime: 0.3
+  afterDelay: 0.3
   followUp: {fileID: 0}
   projectile: {fileID: 5806041901442337587, guid: 20194a67152139c44a1bba546f3fec20, type: 3}
   maxCount: 10

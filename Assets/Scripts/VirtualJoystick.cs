@@ -14,7 +14,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     public Image background;
     public Image controller;
     public UnityEvent OnStickDown;
-    public UnityEvent OnStickDrag;
+    public UnityEvent<Vector3> OnStickDrag;
     public UnityEvent<Vector3, float> OnStickUp;
 
     private void Start()
@@ -45,6 +45,9 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             controller.rectTransform.anchoredPosition = new Vector2
                 (touchPos.x * background.rectTransform.sizeDelta.x * 0.5f, touchPos.y * background.rectTransform.sizeDelta.y * 0.5f);
         }
+        Vector3 touchPosV3 = new Vector3(touchPos.x, 0f, touchPos.y);
+        if (OnStickDrag != null)
+            OnStickDrag.Invoke(touchPosV3.normalized);
     }
 
     public void OnPointerUp(PointerEventData eventData)

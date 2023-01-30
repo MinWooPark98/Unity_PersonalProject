@@ -45,6 +45,16 @@ public class BasicAttackController : MonoBehaviour
         }
     }
 
+    public void ShowAttackRange(Vector3 dir)
+    {
+        attack.ShowRange(dir);
+    }
+
+    public void StopShowAttackRange()
+    {
+        attack.StopShowRange();
+    }
+
     public void ExecuteAttack(Transform attackPivot, Vector3 dir, float distanceRatio)
     {
         if (!attackable)

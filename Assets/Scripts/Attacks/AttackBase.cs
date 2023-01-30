@@ -9,7 +9,7 @@ public abstract class AttackBase : ScriptableObject
     public float arrivalTime;
     public int damage;
     public bool isPenetrable = true;
-    public float actionTime;
+    public float afterDelay;
     public AttackFollowUpBase followUp;
     public Projectile projectile;
 }

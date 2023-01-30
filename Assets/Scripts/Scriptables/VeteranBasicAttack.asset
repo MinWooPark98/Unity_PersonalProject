@@ -16,12 +16,8 @@ MonoBehaviour:
   arrivalTime: 1
   damage: 10
   isPenetrable: 1
-  maxSave: 3
-  saveDelay: 1.5
-  coolDown: 0.75
-  followAttack:
-    m_PersistentCalls:
-      m_Calls: []
+  afterDelay: 0.2
+  followUp: {fileID: 0}
   projectile: {fileID: 5806041901442337587, guid: 20194a67152139c44a1bba546f3fec20, type: 3}
   maxCount: 7
   interval: 0.1

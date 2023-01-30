@@ -6,7 +6,7 @@ using UnityEngine.Events;
 
 public abstract class Attack : MonoBehaviour
 {
-    [SerializeField] protected AttackBase attackBase;
+    public AttackBase attackBase;
     protected AttackFollowUp followUp;
     public Action DoAttack;
     public Action EndAttack;
@@ -36,8 +36,42 @@ public abstract class Attack : MonoBehaviour
     {
         if (EndAttack != null)
         {
-            yield return new WaitForSeconds(attackBase.actionTime);
+            yield return new WaitForSeconds(attackBase.afterDelay);
             EndAttack();
         }
+    }
+
+    public void ShowRange(Vector3 dir)
+    {
+        AttackIndicator indicator = null;
+        switch (this)
+        {
+            case FrontAttack:
+                indicator = GetComponent<SquareIndicator>();
+                break;
+            case RangeAttack:
+                indicator = GetComponent<SectorIndicator>();
+                break;
+            case ThrowAttack:
+                break;
+        }
+        indicator?.DrawRange(dir, this);
+    }
+
+    public void StopShowRange()
+    {
+        AttackIndicator indicator = null;
+        switch (this)
+        {
+            case FrontAttack:
+                indicator = GetComponent<SquareIndicator>();
+                break;
+            case RangeAttack:
+                indicator = GetComponent<SectorIndicator>();
+                break;
+            case ThrowAttack:
+                break;
+        }
+        indicator?.Clear();
     }
 }
