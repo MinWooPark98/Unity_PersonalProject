@@ -8,6 +8,7 @@ public abstract class Health : MonoBehaviour
     public string id;
     private int maxHp;
     private int currHp;
+    public float hpRatio { get => (float)currHp / maxHp; }
     
     public Slider hpBarReal;
     public Slider hpBarEffect;
@@ -17,13 +18,6 @@ public abstract class Health : MonoBehaviour
         var table = DataTableMgr.GetTable<HealthData>();
         maxHp = table.Get(id).maxHp;
         currHp = maxHp;
-    }
-
-    private void Update()
-    {
-        var hpRatio = (float)currHp / maxHp;
-        hpBarReal.value = hpRatio;
-        hpBarEffect.value = Mathf.Lerp(hpBarEffect.value, hpRatio, Time.deltaTime);
     }
 
     public void OnDamage(int dmg)

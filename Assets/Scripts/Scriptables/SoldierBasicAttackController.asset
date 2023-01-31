@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be12a0bc0a701fd459be38bcb7c60cd2, type: 3}
   m_Name: SoldierBasicAttackController
   m_EditorClassIdentifier: 
-  maxSave: 3
+  maxSave: 2
   saveDelay: 3
   coolDown: 1
