@@ -46,13 +46,14 @@ public class SquareIndicator : AttackIndicator
             return;
         var len = viewLength;
         RaycastHit hit;
-        if (Physics.Raycast(attacker.position, dir, out hit, len, obstacleMask))
+        var atkPosYInc = attacker.position + new Vector3(0f, 0.2f, 0f);
+        if (Physics.Raycast(atkPosYInc, dir, out hit, len, obstacleMask))
             len = hit.distance;
 
         var halfWid = Quaternion.Euler(0, 90, 0) * dir * viewWidth * 0.5f;
-        vertices[0] = attacker.position + halfWid;
+        vertices[0] = atkPosYInc + halfWid;
         vertices[1] = vertices[0] + dir * len;
-        vertices[2] = attacker.position - halfWid;
+        vertices[2] = atkPosYInc - halfWid;
         vertices[3] = vertices[2] + dir * len;
 
         triagnles[0] = 0;

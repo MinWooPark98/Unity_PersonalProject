@@ -88,11 +88,11 @@ public class SectorIndicator : AttackIndicator
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo prevViewCast = new ViewCastInfo();
 
-        var attackPos = attacker.position;
+        var atkPosYInc = attacker.position + new Vector3(0f, 0.2f, 0f);
         for (int i = 0; i <= stepCount; i++)
         {
             float angle = Quaternion.LookRotation(lookDir).eulerAngles.y/*transform.eulerAngles.y*/ - viewAngle / 2 + stepAngleSize * i;
-            ViewCastInfo newViewCast = ViewCast(attackPos, angle);
+            ViewCastInfo newViewCast = ViewCast(atkPosYInc, angle);
 
             // i가 0이면 prevViewCast에 아무 값이 없어 정점 보간을 할 수 없으므로 건너뛴다.
             if (i != 0)
@@ -102,7 +102,7 @@ public class SectorIndicator : AttackIndicator
                 // 둘 중 한 raycast가 장애물을 만나지 않았거나 두 raycast가 서로 다른 장애물에 hit 된 것이라면(edgeDstThresholdExceed 여부로 계산)
                 if (prevViewCast.hit != newViewCast.hit || (prevViewCast.hit && newViewCast.hit && edgeDstThresholdExceed))
                 {
-                    Edge e = FindEdge(attackPos, prevViewCast, newViewCast);
+                    Edge e = FindEdge(atkPosYInc, prevViewCast, newViewCast);
 
                     // zero가 아닌 정점을 추가함
                     if (e.PointA != Vector3.zero)
@@ -124,7 +124,7 @@ public class SectorIndicator : AttackIndicator
         int vertexCount = viewPoints.Count + 1;
         Vector3[] vertices = new Vector3[vertexCount];
         int[] triangles = new int[(vertexCount - 2) * 3];
-        vertices[0] = attackPos;
+        vertices[0] = atkPosYInc;
         for (int i = 0; i < vertexCount - 1; i++)
         {
             vertices[i + 1] = viewPoints[i];

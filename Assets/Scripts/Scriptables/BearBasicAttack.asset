@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 99115e7f7370c5349b18b16322b7bae6, type: 3}
+  m_Name: BearBasicAttack
+  m_EditorClassIdentifier: 
+  distance: 10
+  arrivalTime: 1
+  damage: 7
+  isPenetrable: 0
+  afterDelay: 0.3
+  followUp: {fileID: 0}
+  projectile: {fileID: -1889662352834349500, guid: 369df54a5396a4d429f443ce528625f7, type: 3}
+  maxCount: 10
+  angle: 30

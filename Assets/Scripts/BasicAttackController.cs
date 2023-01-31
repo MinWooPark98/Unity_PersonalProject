@@ -11,6 +11,14 @@ public class BasicAttackController : MonoBehaviour
     private bool isInCoolDown = false;
     private float coolTimer;
     public bool attackable { get; protected set; }
+    public float SavedRatio
+    {
+        get
+        {
+            var onceRatio = 1f / basicControllerBase.maxSave;
+            return (savedCount + saveTimer / basicControllerBase.saveDelay) * onceRatio;
+        }
+    }
 
     private void Start()
     {

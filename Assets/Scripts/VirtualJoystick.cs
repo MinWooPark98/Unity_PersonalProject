@@ -8,11 +8,13 @@ using UnityEngine.Events;
 
 public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler, IPointerUpHandler
 {
-    public Vector2 constantOrigin;
-    public Vector2 currOrigin;
-    public Vector2 touchPos;
+    [NonSerialized] public Vector2 constantOrigin;
+    [NonSerialized] public Vector2 currOrigin;
+    [NonSerialized] public Vector2 touchPos;
     public Image background;
     public Image controller;
+    [Range(0f, 0.5f)]
+    public float dragSensitive;
     public UnityEvent OnStickDown;
     public UnityEvent<Vector3> OnStickDrag;
     public UnityEvent<Vector3, float> OnStickUp;

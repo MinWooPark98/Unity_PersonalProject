@@ -6,6 +6,6 @@ public class BoxHealth : Health
 {
     protected override void OnDie()
     {
-        Destroy(gameObject);
+        gameObject.SetActive(false);
     }
 }

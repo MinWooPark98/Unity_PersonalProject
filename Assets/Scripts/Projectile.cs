@@ -71,10 +71,9 @@ public class Projectile : MonoBehaviour
         if (attacker == other.gameObject)
             return;
 
-        if (!isPenetrable)
-            Destroy(gameObject);
-        else if (hitObjects.Find(other.gameObject) != null)
+        if (hitObjects.Find(other.gameObject) != null)
             return;
+
         hitObjects.AddLast(other.gameObject);
 
         var subject = other.GetComponent<Health>();
@@ -85,6 +84,9 @@ public class Projectile : MonoBehaviour
         }
         else
             subject.OnDamage(damage);
+
+        if (!isPenetrable)
+            Destroy(gameObject);
     }
 
     private Vector3 BezierCurve()

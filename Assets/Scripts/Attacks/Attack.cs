@@ -18,7 +18,7 @@ public abstract class Attack : MonoBehaviour
         switch (attackBase.followUp)
         {
             case AreaAttackBase:
-                followUp = new AreaAttack();
+                followUp = new AreaAttack(attackBase.followUp);
                 break;
             case SummonBase:
                 break;

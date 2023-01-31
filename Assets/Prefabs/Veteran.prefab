@@ -1061,13 +1061,16 @@ GameObject:
   - component: {fileID: 7432012235453170551}
   - component: {fileID: 7177107026820203555}
   - component: {fileID: 1177138684}
+  - component: {fileID: 1894123274}
+  - component: {fileID: 1894123282}
+  - component: {fileID: 1894123293}
   m_Layer: 0
   m_Name: Veteran
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1343755915957405030
 Transform:
   m_ObjectHideFlags: 0
@@ -1101,7 +1104,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!136 &1343755915957405028
 CapsuleCollider:
@@ -1144,6 +1147,11 @@ MonoBehaviour:
   speed: 5
   rotateSpeed: 5
   basicController: {fileID: 2168215906284898985}
+  skillController: {fileID: 0}
+  basicAttackAnimName: BasicAttack
+  basicAttackAnimIsLoop: 1
+  skillAttackAnimName: 
+  skillAttackAnimIsLoop: 0
   attackPivot: {fileID: 745211400}
 --- !u!114 &2168215906284898985
 MonoBehaviour:
@@ -1158,7 +1166,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicControllerBase: {fileID: 11400000, guid: efec1155e41b10349ae492b1ec140b5e, type: 2}
-  attack: {fileID: 2069754588339344192}
+  attack: {fileID: 0}
 --- !u!114 &2069754588339344192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1217,6 +1225,61 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
+--- !u!114 &1894123274
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343755915957405032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a509a06210c8af4abba5304223429c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  id: 1
+--- !u!114 &1894123282
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343755915957405032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11df3c7cd334c2048a45f8d02d514302, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 2048
+  meshResolution: 45
+  visibleTargets: []
+  viewMeshFilter: {fileID: 0}
+  viewMeshRenderer: {fileID: 0}
+  edgeResolveIterations: 0
+  edgeDstThreshold: 0
+--- !u!114 &1894123293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343755915957405032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9eaa54993e7b1b5489d1876b23e172e3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  viewWidth: 3
+  viewMeshFilter: {fileID: 0}
+  viewMeshRenderer: {fileID: 0}
+  obstacleMask:
+    serializedVersion: 2
+    m_Bits: 2048
 --- !u!1 &1343755915980108769
 GameObject:
   m_ObjectHideFlags: 0

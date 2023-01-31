@@ -9,15 +9,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 99115e7f7370c5349b18b16322b7bae6, type: 3}
-  m_Name: ExRange
+  m_Script: {fileID: 11500000, guid: 513ffda8a8db7dd4db3a1edde311a21e, type: 3}
+  m_Name: SoldierBasicAttack
   m_EditorClassIdentifier: 
   distance: 10
   arrivalTime: 1
-  damage: 3
-  isPenetrable: 1
+  damage: 5
+  isPenetrable: 0
   afterDelay: 0.3
-  followUp: {fileID: 0}
-  projectile: {fileID: 5806041901442337587, guid: 20194a67152139c44a1bba546f3fec20, type: 3}
-  maxCount: 10
-  angle: 30
+  followUp: {fileID: 11400000, guid: 2684039ba312df449849462584f37d47, type: 2}
+  projectile: {fileID: 3415746808101508657, guid: abc933e1eaef0214d88944dc02b5a3a3, type: 3}
+  maxCount: 1
+  interval: 0
