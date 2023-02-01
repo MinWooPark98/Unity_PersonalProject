@@ -9,9 +9,7 @@ public abstract class Health : MonoBehaviour
     private int maxHp;
     private int currHp;
     public float hpRatio { get => (float)currHp / maxHp; }
-    
-    public Slider hpBarReal;
-    public Slider hpBarEffect;
+    public DamageEffect effect;
 
     void Start()
     {
@@ -24,6 +22,8 @@ public abstract class Health : MonoBehaviour
     {
         Debug.Log($"{dmg} {currHp}");
         currHp -= dmg;
+        if (effect != null)
+            effect.OnHit(dmg);
         if (currHp < 0)
         {
             OnDie();
