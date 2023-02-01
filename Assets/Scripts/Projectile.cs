@@ -62,7 +62,7 @@ public class Projectile : MonoBehaviour
         {
             Vector3 dir = direction;
             rb.velocity = dir * distance / arrivalTime;
-            transform.LookAt(dir);
+            transform.forward = dir;
         }
     }
 

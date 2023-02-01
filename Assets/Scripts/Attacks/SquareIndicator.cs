@@ -1,9 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UIElements;
-using static SectorIndicator;
-using static UnityEditor.PlayerSettings;
 
 public class SquareIndicator : AttackIndicator
 {
