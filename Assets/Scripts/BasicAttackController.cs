@@ -64,12 +64,12 @@ public class BasicAttackController : MonoBehaviour
         attack.StopShowRange();
     }
 
-    public void ExecuteAttack(Transform attackPivot, Vector3 dir, float distanceRatio)
+    public void ExecuteAttack(Transform attackPivot, Vector3 dir, int level, float distanceRatio)
     {
         if (!attackable)
             return;
         ExeSucceed();
-        attack.Execute(attackPivot, dir, distanceRatio);
+        attack.Execute(attackPivot, dir, level, distanceRatio);
     }
 
     private void ExeSucceed()

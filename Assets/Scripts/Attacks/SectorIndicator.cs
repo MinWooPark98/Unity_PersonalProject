@@ -88,7 +88,7 @@ public class SectorIndicator : AttackIndicator
         List<Vector3> viewPoints = new List<Vector3>();
         ViewCastInfo prevViewCast = new ViewCastInfo();
 
-        var atkPosYInc = attacker.position + new Vector3(0f, 0.2f, 0f);
+        var atkPosYInc = attacker.position + new Vector3(0f, 0.01f, 0f);
         for (int i = 0; i <= stepCount; i++)
         {
             float angle = Quaternion.LookRotation(lookDir).eulerAngles.y/*transform.eulerAngles.y*/ - viewAngle / 2 + stepAngleSize * i;

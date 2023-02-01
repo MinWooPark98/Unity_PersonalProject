@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7bdc0d68beadbbb41845e285d005ecb3, type: 3}
   m_Name: SoldierBasicAttackFollow
   m_EditorClassIdentifier: 
+  obtainGauge: 0
   damage: 30
+  growthDamage: 5
   radius: 1.5

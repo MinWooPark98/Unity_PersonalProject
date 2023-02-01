@@ -13,6 +13,7 @@ public class Projectile : MonoBehaviour
     private float timer;
     private float distance;
     private int damage;
+    private int level;
     private bool isPenetrable = true;
     private bool isParabolic = false;
     private float height = 0f;
@@ -33,10 +34,10 @@ public class Projectile : MonoBehaviour
 
     private void OnDisable()
     {
-        followAttack?.Execute(transform.position);
+        followAttack?.Execute(attacker, transform.position, level);
     }
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, int level,  AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
         this.attacker = attacker;
         this.startPos = startPos;
@@ -45,6 +46,7 @@ public class Projectile : MonoBehaviour
         this.arrivalTime = arrivalTime;
         this.distance = distance;
         this.damage = damage;
+        this.level = level;
         this.followAttack = followAttack;
         this.isPenetrable = isPenetrable;
         this.isParabolic = isParabolic;
@@ -76,15 +78,16 @@ public class Projectile : MonoBehaviour
         if (hitObjects.Find(other.gameObject) != null)
             return;
 
-        hitObjects.AddLast(other.gameObject);
-
-        var subject = other.GetComponent<Health>();
-        if (subject == null)
+        if (other.gameObject.layer == LayerMask.NameToLayer("Solid"))
         {
             Destroy(gameObject);
             return;
         }
-        else
+
+        hitObjects.AddLast(other.gameObject);
+
+        var subject = other.GetComponent<Health>();
+        if (subject != null)
         {
             attacker.GetComponent<SkillAttackController>().ObtainGauge(obtainGauge);
             subject.OnDamage(damage);

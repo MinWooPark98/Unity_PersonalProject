@@ -10,7 +10,7 @@ public class Summon : AttackFollowUp
         followUpBase = thisBase;
     }
 
-    public override void Execute(Vector3 pos)
+    public override void Execute(GameObject attacker, Vector3 pos, int level)
     {
     }
 }

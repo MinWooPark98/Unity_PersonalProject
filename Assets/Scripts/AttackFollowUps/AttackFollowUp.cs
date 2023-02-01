@@ -6,5 +6,5 @@ public abstract class AttackFollowUp
 {
     protected AttackFollowUpBase followUpBase;
 
-    public abstract void Execute(Vector3 pos);
+    public abstract void Execute(GameObject attacker, Vector3 pos, int level);
 }

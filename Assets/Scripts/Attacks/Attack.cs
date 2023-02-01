@@ -25,7 +25,7 @@ public abstract class Attack : MonoBehaviour
         }
     }
 
-    public abstract void Execute(Transform attackPivot, Vector3 dir, float distanceRatio);
+    public abstract void Execute(Transform attackPivot, Vector3 dir, int level, float distanceRatio);
 
     protected void FinishAttack()
     {

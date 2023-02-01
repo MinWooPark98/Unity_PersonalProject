@@ -16,6 +16,7 @@ MonoBehaviour:
   distance: 10
   arrivalTime: 1
   damage: 7
+  growthDamage: 1
   isPenetrable: 0
   afterDelay: 0.3
   followUp: {fileID: 0}

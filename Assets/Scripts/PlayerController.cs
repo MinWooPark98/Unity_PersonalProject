@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
+    public int level { get; private set; } = 0;
+
     public static readonly int HashMove = Animator.StringToHash("isMoving");
     public static readonly int HashEndAttack = Animator.StringToHash("endAttack");
 
@@ -80,7 +82,7 @@ public class PlayerController : MonoBehaviour
             return;
         transform.rotation = Quaternion.LookRotation(dir);
         isAttacking = true;
-        basicController.ExecuteAttack(attackPivot, dir, ratio);
+        basicController.ExecuteAttack(attackPivot, dir, level, ratio);
     }
 
     public void BasicAttackAnimPlay()
@@ -97,7 +99,7 @@ public class PlayerController : MonoBehaviour
             return;
         transform.rotation = Quaternion.LookRotation(dir);
         isAttacking = true;
-        skillController.ExecuteAttack(attackPivot, dir, ratio);
+        skillController.ExecuteAttack(attackPivot, dir, level, ratio);
     }
 
     public void SkillAttackAnimPlay()
@@ -113,4 +115,6 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
         animator.SetTrigger(HashEndAttack);
     }
+
+    public void LevelUp() => level++;
 }

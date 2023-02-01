@@ -12,13 +12,18 @@ public class AreaAttack : AttackFollowUp
         followUpBase = thisBase;
     }
 
-    public override void Execute(Vector3 pos)
+    public override void Execute(GameObject attacker, Vector3 pos, int level)
     {
         var thisBase = (AreaAttackBase)followUpBase;
         var cols = Physics.OverlapSphere(pos, thisBase.radius); // 구 안에 들어있는 모든 colliders return
+        var damage = thisBase.damage + thisBase.growthDamage * level;
         foreach (var col in cols)
         {
-            col.GetComponent<Health>()?.OnDamage(thisBase.damage);
+            var health = col.GetComponent<Health>();
+            if (health != null && col.gameObject != attacker)
+            {
+                health.OnDamage(damage);
+            }
         }
     }
 }

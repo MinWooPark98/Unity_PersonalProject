@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class FrontAttack : Attack
 {
-    public override void Execute(Transform attackPivot, Vector3 dir, float distanceRatio)
+    public override void Execute(Transform attackPivot, Vector3 dir, int level, float distanceRatio)
     {
-        StartCoroutine(CoFire(attackPivot, dir, distanceRatio));
+        StartCoroutine(CoFire(attackPivot, dir, level));
     }
 
-    private IEnumerator CoFire(Transform attackPivot, Vector3 dir, float distanceRatio)
+    private IEnumerator CoFire(Transform attackPivot, Vector3 dir, int level)
     {
         int count = 0;
         var thisBase = (FrontAttackBase)attackBase;
+        var damage = thisBase.damage + thisBase.growthDamage * level;
         while (true)
         {
             var pro = Instantiate(attackBase.projectile);
-            pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime, thisBase.distance, thisBase.damage, followUp, thisBase.isPenetrable);
+            pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime,
+                thisBase.distance, damage, level, followUp, thisBase.isPenetrable);
             if (DoAttack != null)
                 DoAttack();
             ++count;
