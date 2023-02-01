@@ -43,7 +43,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7304551549023371758}
   - component: {fileID: 7304551549023371759}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 7304551549179638387}
   - component: {fileID: 7304551549179638413}
   - component: {fileID: 7304551549179638412}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BasicAttackGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,7 +225,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7304551549359780032}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -264,7 +264,7 @@ GameObject:
   - component: {fileID: 7304551549612844897}
   - component: {fileID: 7304551549612844899}
   - component: {fileID: 7304551549612844898}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 7304551549917672418}
   - component: {fileID: 7304551549917672417}
   - component: {fileID: 7304551549917672416}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -357,7 +357,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7304551549917672422}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.2533607}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -368,7 +368,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.7687957, y: 1.9748483}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &7304551549917672419
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 7304551549966856819}
   - component: {fileID: 7304551549966856845}
   - component: {fileID: 7304551549966856844}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -478,7 +478,7 @@ RectTransform:
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -616,6 +616,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (3)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -722,6 +726,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -741,11 +749,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 8818077897633096892, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 0.414
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8818077897633096892, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8818077897850510109, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
       propertyPath: m_Value
@@ -857,11 +865,11 @@ PrefabInstance:
       objectReference: {fileID: 2638373615010104535}
     - target: {fileID: 8818077898700187800, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
       propertyPath: m_AnchorMax.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8818077898700187800, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 72ee95fdd05a92446ba33c76bac2bef4, type: 3}
@@ -988,6 +996,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (6)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1092,6 +1104,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1200,6 +1216,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (7)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1304,6 +1324,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1412,6 +1436,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (2)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1516,6 +1544,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1624,6 +1656,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (4)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1730,6 +1766,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (8)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1787,6 +1827,10 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.069227576
       objectReference: {fileID: 0}
+    - target: {fileID: 6320519488412924661, guid: 0f04b04106f306a4a803cfa435e664fd, type: 3}
+      propertyPath: skillControllerBase
+      value: 
+      objectReference: {fileID: 11400000, guid: fa7c1c3d4f2969c45afa0db665c570b8, type: 2}
     - target: {fileID: 6320519488412924667, guid: 0f04b04106f306a4a803cfa435e664fd, type: 3}
       propertyPath: m_RootOrder
       value: 0

@@ -20,7 +20,6 @@ public abstract class Health : MonoBehaviour
 
     public void OnDamage(int dmg)
     {
-        Debug.Log($"{dmg} {currHp}");
         currHp -= dmg;
         if (effect != null)
             effect.OnHit(dmg);
@@ -28,7 +27,6 @@ public abstract class Health : MonoBehaviour
         {
             OnDie();
         }
-        // hp bar Ui 에서 천천히 줄어들도록 하는 함수 실행
     }
 
     protected abstract void OnDie();

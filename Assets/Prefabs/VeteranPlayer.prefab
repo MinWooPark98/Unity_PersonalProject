@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 1352719898221370225}
   - component: {fileID: 1352719898221370239}
   - component: {fileID: 1352719898221370224}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: BasicAttackGauge
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -153,7 +153,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1352719898658883285}
   - component: {fileID: 1352719898658883284}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Borders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -229,7 +229,7 @@ GameObject:
   - component: {fileID: 1352719898898292916}
   - component: {fileID: 1352719898898292917}
   - component: {fileID: 1352719898898292918}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -244,7 +244,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1352719898898292904}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -1.2533607}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.02, y: 0.02, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -255,7 +255,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2.7687957, y: 1.9748483}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 1, y: 1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &1352719898898292915
@@ -342,7 +342,7 @@ GameObject:
   - component: {fileID: 1352719899059764950}
   - component: {fileID: 1352719899059764948}
   - component: {fileID: 1352719899059764949}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -416,7 +416,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1352719899332645357}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill Area
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -455,7 +455,7 @@ GameObject:
   - component: {fileID: 1352719899872974992}
   - component: {fileID: 1352719899872975006}
   - component: {fileID: 1352719899872975007}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: Fill
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -616,6 +616,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (2)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -722,6 +726,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (1)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -739,6 +747,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 1352719898397148135}
     m_Modifications:
+    - target: {fileID: 745211400, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 745211400, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.462
+      objectReference: {fileID: 0}
     - target: {fileID: 1894123282, guid: 4a236c9961576584b99d833309bff122, type: 3}
       propertyPath: viewMeshFilter
       value: 
@@ -769,7 +785,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1343755915957405030, guid: 4a236c9961576584b99d833309bff122, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.65
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1343755915957405030, guid: 4a236c9961576584b99d833309bff122, type: 3}
       propertyPath: m_LocalPosition.z
@@ -811,10 +827,34 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: skillController
+      value: 
+      objectReference: {fileID: 8495508898253335505}
+    - target: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: skillAttackAnimName
+      value: BasicAttack
+      objectReference: {fileID: 0}
+    - target: {fileID: 1343755915957405034, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: skillAttackAnimIsLoop
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2168215906284898985, guid: 4a236c9961576584b99d833309bff122, type: 3}
       propertyPath: attack
       value: 
       objectReference: {fileID: 1043970079692684262}
+    - target: {fileID: 7177107026820203555, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: attackBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 6ca09d5b6b637ce4d9861549350c5fa4, type: 2}
+    - target: {fileID: 7432012235453170551, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: attack
+      value: 
+      objectReference: {fileID: 8169502529366813829}
+    - target: {fileID: 7432012235453170551, guid: 4a236c9961576584b99d833309bff122, type: 3}
+      propertyPath: skillControllerBase
+      value: 
+      objectReference: {fileID: 11400000, guid: 451e4b17fcc72e14e90d1ca6c6769369, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4a236c9961576584b99d833309bff122, type: 3}
 --- !u!4 &27067185847135680 stripped
@@ -853,6 +893,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9a509a06210c8af4abba5304223429c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8169502529366813829 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7177107026820203555, guid: 4a236c9961576584b99d833309bff122, type: 3}
+  m_PrefabInstance: {fileID: 1352719898354411686}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8db832a7d333cb3468604dfdecf9ffb8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &8495508898253335505 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7432012235453170551, guid: 4a236c9961576584b99d833309bff122, type: 3}
+  m_PrefabInstance: {fileID: 1352719898354411686}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 47d54bf7e4d82e2459ec1ebf212d5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &1352719898674199268
@@ -949,6 +1011,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (8)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1057,6 +1123,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (7)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1163,6 +1233,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (3)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1267,6 +1341,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (9)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1535,6 +1613,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder (6)
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1639,6 +1721,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (5)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
@@ -1747,6 +1833,10 @@ PrefabInstance:
       value: BasicAttackGaugeBorder
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
@@ -1851,6 +1941,10 @@ PrefabInstance:
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_Name
       value: BasicAttackGaugeBorder (4)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
+      propertyPath: m_Layer
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 3799383629034235725, guid: edf6c9dc7c17fae44853af273036ba62, type: 3}
       propertyPath: m_IsActive

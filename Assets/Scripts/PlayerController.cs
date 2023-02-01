@@ -37,10 +37,16 @@ public class PlayerController : MonoBehaviour
 
         basicController.attack.EndAttack = EndAttack;
         basicController.attack.DoAttack = BasicAttackAnimPlay;
-        //skillController.attack.EndAttack = EndAttack;
-        //skillController.attack.DoAttack = SkillAttackAnimPlay;
-
+        skillController.attack.EndAttack = EndAttack;
+        skillController.attack.DoAttack = SkillAttackAnimPlay;
         skillController.Attackable = TakeSkillInput;
+
+        basicAttackStick.OnStickDrag.AddListener(basicController.ShowAttackRange);
+        basicAttackStick.OnStickUp.AddListener((x, y) => { basicController.StopShowAttackRange(); });
+        basicAttackStick.OnStickUp.AddListener(BasicAttack);
+        skillAttackStick.OnStickDrag.AddListener(skillController.ShowAttackRange);
+        skillAttackStick.OnStickUp.AddListener((x, y) => { skillController.StopShowAttackRange(); });
+        skillAttackStick.OnStickUp.AddListener(SkillAttack);
     }
 
     void Update()
