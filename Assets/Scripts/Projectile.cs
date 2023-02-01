@@ -8,6 +8,7 @@ public class Projectile : MonoBehaviour
     private GameObject attacker;
     private Vector3 startPos;
     private Vector3 direction;
+    private int obtainGauge;
     private float arrivalTime;
     private float timer;
     private float distance;
@@ -35,11 +36,12 @@ public class Projectile : MonoBehaviour
         followAttack?.Execute(transform.position);
     }
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
         this.attacker = attacker;
         this.startPos = startPos;
         this.direction = direction;
+        this.obtainGauge = obtainGauge;
         this.arrivalTime = arrivalTime;
         this.distance = distance;
         this.damage = damage;
@@ -83,7 +85,10 @@ public class Projectile : MonoBehaviour
             return;
         }
         else
+        {
+            attacker.GetComponent<SkillAttackController>().ObtainGauge(obtainGauge);
             subject.OnDamage(damage);
+        }
 
         if (!isPenetrable)
             Destroy(gameObject);

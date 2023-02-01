@@ -5,6 +5,7 @@ using UnityEngine.Events;
 
 public abstract class AttackBase : ScriptableObject
 {
+    public int obtainGauge;
     public float distance;
     public float arrivalTime;
     public int damage;

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,7 +11,7 @@ public class BasicAttackController : MonoBehaviour
     private float saveTimer;
     private bool isInCoolDown = false;
     private float coolTimer;
-    public bool attackable { get; protected set; }
+    public bool attackable { get; private set; }
     public float SavedRatio
     {
         get

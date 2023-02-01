@@ -13,6 +13,6 @@ public class CanvasDirection : MonoBehaviour
 
     void Update()
     {
-        transform.rotation = mainCamera.rotation;
+        transform.forward = mainCamera.forward;
     }
 }

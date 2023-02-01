@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3998080933889135783}
   - component: {fileID: 3964774384446583189}
   - component: {fileID: 3972659814700957629}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ladder_wood_LOD0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -94,7 +94,7 @@ GameObject:
   - component: {fileID: 3990780689116217119}
   - component: {fileID: 3965184006679065055}
   - component: {fileID: 3972530828758777733}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ladder_wood_LOD1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -177,7 +177,7 @@ GameObject:
   - component: {fileID: 3990932371559758439}
   - component: {fileID: 3867034103814831693}
   - component: {fileID: 2431673399575997670}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -253,7 +253,7 @@ GameObject:
   - component: {fileID: 3991039473499192143}
   - component: {fileID: 3965261816945610019}
   - component: {fileID: 3973923427227804075}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ladder_wood_LOD2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -335,7 +335,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4205128797377273977}
   - component: {fileID: 7491364150995851036}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Fence
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -380,9 +380,25 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 4205128797377273977}
     m_Modifications:
+    - target: {fileID: 1684286606877082, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1795946946400796, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
+    - target: {fileID: 1835963521842878, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
+      propertyPath: m_Layer
+      value: 11
+      objectReference: {fileID: 0}
     - target: {fileID: 1952129819604958, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
       propertyPath: m_Name
       value: pebbles_1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952129819604958, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
+      propertyPath: m_Layer
+      value: 11
       objectReference: {fileID: 0}
     - target: {fileID: 4420367720125966, guid: 108254541f8a51146aafe39f9f2a3b22, type: 3}
       propertyPath: m_RootOrder

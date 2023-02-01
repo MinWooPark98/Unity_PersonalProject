@@ -8,7 +8,7 @@ public class ThrowAttack : Attack
     {
         var thisBase = (ThrowAttackBase)attackBase;
         var pro = Instantiate(attackBase.projectile);
-        pro.Set(gameObject, attackPivot.position, dir, thisBase.arrivalTime, thisBase.distance * distanceRatio, thisBase.damage, followUp, thisBase.isPenetrable, true, thisBase.throwHeight);
+        pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime, thisBase.distance * distanceRatio, thisBase.damage, followUp, thisBase.isPenetrable, true, thisBase.throwHeight);
         if (DoAttack != null)
             DoAttack();
         FinishAttack();

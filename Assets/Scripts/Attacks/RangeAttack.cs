@@ -14,7 +14,7 @@ public class RangeAttack : Attack
             var pro = Instantiate(attackBase.projectile);
             var newDir = Vector3.Lerp(leftDir, rightDir, (float)i / thisBase.maxCount);
             var newDistance = thisBase.distance * Random.Range(0.9f, 1.1f);
-            pro.Set(gameObject, attackPivot.position, newDir, thisBase.arrivalTime, newDistance, thisBase.damage, followUp, thisBase.isPenetrable);
+            pro.Set(gameObject, attackPivot.position, newDir, thisBase.obtainGauge, thisBase.arrivalTime, newDistance, thisBase.damage, followUp, thisBase.isPenetrable);
         }
         if (DoAttack != null)
             DoAttack();
