@@ -21,5 +21,5 @@ MonoBehaviour:
   afterDelay: 0.3
   followUp: {fileID: 0}
   projectile: {fileID: -1889662352834349500, guid: 369df54a5396a4d429f443ce528625f7, type: 3}
-  maxCount: 10
-  angle: 30
+  maxCount: 6
+  angle: 45

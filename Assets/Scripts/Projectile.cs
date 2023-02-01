@@ -91,10 +91,10 @@ public class Projectile : MonoBehaviour
         {
             attacker.GetComponent<SkillAttackController>().ObtainGauge(obtainGauge);
             subject.OnDamage(damage);
-        }
 
-        if (!isPenetrable)
-            Destroy(gameObject);
+            if (!isPenetrable)
+                Destroy(gameObject);
+        }
     }
 
     private Vector3 BezierCurve()

@@ -43,7 +43,7 @@ public class SquareIndicator : AttackIndicator
             return;
         var len = viewLength;
         RaycastHit hit;
-        var atkPosYInc = attacker.position + new Vector3(0f, 0.01f, 0f);
+        var atkPosYInc = attacker.position + new Vector3(0f, 0.1f, 0f);
         if (Physics.Raycast(atkPosYInc, dir, out hit, len, obstacleMask))
             len = hit.distance;
 
