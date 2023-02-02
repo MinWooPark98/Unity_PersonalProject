@@ -15,4 +15,5 @@ MonoBehaviour:
   obtainGauge: 15
   damage: 30
   growthDamage: 3
+  effectPrefab: {fileID: 469380726896008909, guid: 957a45f3d4244b8479694b12be5aab7d, type: 3}
   radius: 2

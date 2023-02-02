@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Events;
 using UnityEngine.Pool;
 
 public abstract class Attack : MonoBehaviour
@@ -12,17 +10,17 @@ public abstract class Attack : MonoBehaviour
     public Action DoAttack;
     public Action EndAttack;
     protected IObjectPool<Projectile> projectilePool;
+    protected IObjectPool<ParticleEffect> followUpEffectPool;
 
     private void Start()
     {
-        if (attackBase == null)
-            return;
         switch (attackBase.followUp)
         {
             case AreaAttackBase:
                 followUp = new AreaAttack(attackBase.followUp);
                 break;
             case SummonBase:
+                followUp = new Summon(attackBase.followUp);
                 break;
         }
 
@@ -39,6 +37,11 @@ public abstract class Attack : MonoBehaviour
                 break;
         }
         projectilePool = new ObjectPool<Projectile>(CreateProjectile, OnGetProjectile, OnReleaseProjectile, OnDestroyProjectile, maxSize: maxCount * 3);
+        if (attackBase.followUp.effectPrefab != null)
+        {
+            followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, OnGetFollowUpEffect, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount * 3); ;
+            followUp.SetPool(followUpEffectPool);
+        }
     }
 
     private Projectile CreateProjectile()
@@ -47,12 +50,19 @@ public abstract class Attack : MonoBehaviour
         projectile.SetPool(projectilePool);
         return projectile;
     }
-
     private void OnGetProjectile(Projectile projectile) => projectile.gameObject.SetActive(true);
-
     private void OnReleaseProjectile(Projectile projectile) => projectile.gameObject.SetActive(false);
-
     private void OnDestroyProjectile(Projectile projectile) => Destroy(projectile.gameObject);
+
+    private ParticleEffect CreateFollowUpEffect()
+    {
+        ParticleEffect effect = Instantiate(attackBase.followUp.effectPrefab);
+        effect.SetPool(followUpEffectPool);
+        return effect;
+    }
+    private void OnGetFollowUpEffect(ParticleEffect effect) => effect.gameObject.SetActive(true);
+    private void OnReleaseFollowUpEffect(ParticleEffect effect) => effect.gameObject.SetActive(false);
+    private void OnDestroyFollowUpEffect(ParticleEffect effect) => Destroy(effect.gameObject);
 
     public abstract void Execute(Transform attackPivot, Vector3 dir, int level, float distanceRatio);
 

@@ -41,7 +41,7 @@ public class Projectile : MonoBehaviour
 
     public void SetPool(IObjectPool<Projectile> pool) => this.pool = pool;
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, int level,  AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, int level, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
         this.attacker = attacker;
         this.startPos = startPos;

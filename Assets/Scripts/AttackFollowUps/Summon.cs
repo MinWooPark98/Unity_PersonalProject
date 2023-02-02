@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class Summon : AttackFollowUp
 {
-
     public Summon(AttackFollowUpBase thisBase)
     {
         followUpBase = thisBase;

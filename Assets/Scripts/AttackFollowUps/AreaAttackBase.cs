@@ -6,5 +6,4 @@ using UnityEngine;
 public class AreaAttackBase : AttackFollowUpBase
 {
     public float radius;
-    // 이펙트 등 추가
 }

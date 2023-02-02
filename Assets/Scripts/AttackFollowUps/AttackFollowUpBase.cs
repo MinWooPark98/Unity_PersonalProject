@@ -7,4 +7,5 @@ public abstract class AttackFollowUpBase : ScriptableObject
     public int obtainGauge;
     public int damage;
     public int growthDamage;
+    public ParticleEffect effectPrefab;
 }

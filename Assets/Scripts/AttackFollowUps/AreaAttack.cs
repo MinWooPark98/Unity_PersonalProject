@@ -1,12 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.UIElements;
+using UnityEngine.Pool;
 
 public class AreaAttack : AttackFollowUp
 {
-    // 이펙트 프리펩
-
     public AreaAttack(AttackFollowUpBase thisBase)
     {
         followUpBase = thisBase;
@@ -15,6 +14,9 @@ public class AreaAttack : AttackFollowUp
     public override void Execute(GameObject attacker, Vector3 pos, int level)
     {
         var thisBase = (AreaAttackBase)followUpBase;
+        var effect = effectPool.Get();
+        effect.transform.position = pos;
+        effect.transform.localScale = new Vector3(thisBase.radius * 2f, thisBase.radius * 2f, 0f);
         var cols = Physics.OverlapSphere(pos, thisBase.radius); // 구 안에 들어있는 모든 colliders return
         var damage = thisBase.damage + thisBase.growthDamage * level;
         foreach (var col in cols)
