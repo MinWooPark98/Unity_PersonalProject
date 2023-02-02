@@ -12,7 +12,7 @@ public class RangeAttack : Attack
         var damage = thisBase.damage + thisBase.growthDamage * level;
         for (int i = 0; i < thisBase.maxCount; ++i)
         {
-            var pro = Instantiate(attackBase.projectile);
+            var pro = projectilePool.Get();
             var newDir = Vector3.Lerp(leftDir, rightDir, (float)i / thisBase.maxCount);
             var newDistance = thisBase.distance * Random.Range(0.9f, 1.1f);
             pro.Set(gameObject, attackPivot.position, newDir, thisBase.obtainGauge, thisBase.arrivalTime,

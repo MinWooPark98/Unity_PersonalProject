@@ -15,7 +15,8 @@ public class DamageEffect : MonoBehaviour
 
     public void OnHit(int dmg)
     {
-        var effect = Instantiate(prefab, transform.position + new Vector3(Random.Range(0, 0.5f), 1f, Random.Range(0, 0.5f)) * height, Quaternion.identity);
+        var effect = PlaySceneManager.instance.showDamageLauncher.Get();
+        effect.transform.position = transform.position + new Vector3(Random.Range(0, 0.5f), 1f, Random.Range(0, 0.5f)) * height;
         effect.Set(dmg.ToString(), color, characterSize, duration, refloatY);
     }
 }

@@ -4,8 +4,10 @@
 TagManager:
   serializedVersion: 2
   tags:
-  - Breakable
-  - UnBreakable
+  - MoveJoyStick
+  - AttackJoyStick
+  - SkillJoyStick
+  - SkillAvailability
   layers:
   - Default
   - TransparentFX

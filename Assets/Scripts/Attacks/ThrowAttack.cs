@@ -8,7 +8,7 @@ public class ThrowAttack : Attack
     {
         var thisBase = (ThrowAttackBase)attackBase;
         var damage = thisBase.damage + thisBase.growthDamage * level;
-        var pro = Instantiate(attackBase.projectile);
+        var pro = projectilePool.Get();
         pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime,
             thisBase.distance * distanceRatio, damage, level, followUp, thisBase.isPenetrable, true, thisBase.throwHeight);
         if (DoAttack != null)

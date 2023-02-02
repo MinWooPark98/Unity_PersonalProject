@@ -10,10 +10,10 @@ public class PlayerController : MonoBehaviour
     public static readonly int HashMove = Animator.StringToHash("isMoving");
     public static readonly int HashEndAttack = Animator.StringToHash("endAttack");
 
-    public VirtualJoystick moveStick;
-    public VirtualJoystick basicAttackStick;
-    public VirtualJoystick skillAttackStick;
-    public Slider skillAvailability;
+    private VirtualJoystick moveStick;
+    private VirtualJoystick basicAttackStick;
+    private VirtualJoystick skillAttackStick;
+    private Slider skillAvailability;
 
     private Rigidbody rb;
     private PlayerInput playerInput;
@@ -36,13 +36,21 @@ public class PlayerController : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
+        moveStick = GameObject.FindWithTag("MoveJoyStick").GetComponent<VirtualJoystick>();
+        basicAttackStick = GameObject.FindWithTag("AttackJoyStick").GetComponent<VirtualJoystick>();
+        skillAttackStick = GameObject.FindWithTag("SkillJoyStick").GetComponent<VirtualJoystick>();
+        skillAvailability = GameObject.FindWithTag("SkillAvailability").GetComponent<Slider>();
+    }
 
+    private void Start()
+    {
         basicController.attack.EndAttack = EndAttack;
         basicController.attack.DoAttack = BasicAttackAnimPlay;
         skillController.attack.EndAttack = EndAttack;
         skillController.attack.DoAttack = SkillAttackAnimPlay;
         skillController.Attackable = TakeSkillInput;
 
+        //moveStick.OnStickDrag.AddListener((dir) => { Move(dir.normalized) });
         basicAttackStick.OnStickDrag.AddListener(basicController.ShowAttackRange);
         basicAttackStick.OnStickUp.AddListener((x, y) => { basicController.StopShowAttackRange(); });
         basicAttackStick.OnStickUp.AddListener(BasicAttack);

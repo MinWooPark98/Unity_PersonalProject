@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 
 public class Projectile : MonoBehaviour
 {
@@ -20,6 +21,7 @@ public class Projectile : MonoBehaviour
     private AttackFollowUp followAttack;
     private Rigidbody rb;
     private LinkedList<GameObject> hitObjects = new LinkedList<GameObject>();
+    private IObjectPool<Projectile> pool;
 
     private void Awake()
     {
@@ -36,6 +38,8 @@ public class Projectile : MonoBehaviour
     {
         followAttack?.Execute(attacker, transform.position, level);
     }
+
+    public void SetPool(IObjectPool<Projectile> pool) => this.pool = pool;
 
     public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, int level,  AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
@@ -58,7 +62,9 @@ public class Projectile : MonoBehaviour
     {
         timer += Time.deltaTime;
         if (timer >= arrivalTime)
-            Destroy(gameObject);
+        {
+            pool.Release(this);
+        }
 
         if (isParabolic)
             rb.MovePosition(BezierCurve());
@@ -80,7 +86,7 @@ public class Projectile : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Solid"))
         {
-            Destroy(gameObject);
+            pool.Release(this);
             return;
         }
 
@@ -93,7 +99,7 @@ public class Projectile : MonoBehaviour
             subject.OnDamage(damage);
 
             if (!isPenetrable)
-                Destroy(gameObject);
+                pool.Release(this);
         }
     }
 

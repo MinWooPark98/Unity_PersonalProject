@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   obtainGauge: 15
   damage: 30
-  growthDamage: 5
-  radius: 1.5
+  growthDamage: 3
+  radius: 2

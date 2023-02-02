@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: SoldierBasicAttackController
   m_EditorClassIdentifier: 
   maxSave: 2
-  saveDelay: 3
+  saveDelay: 2
   coolDown: 1

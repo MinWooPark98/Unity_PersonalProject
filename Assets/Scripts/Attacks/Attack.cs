@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Pool;
 
 public abstract class Attack : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public abstract class Attack : MonoBehaviour
     protected AttackFollowUp followUp;
     public Action DoAttack;
     public Action EndAttack;
+    protected IObjectPool<Projectile> projectilePool;
 
     private void Start()
     {
@@ -23,7 +25,34 @@ public abstract class Attack : MonoBehaviour
             case SummonBase:
                 break;
         }
+
+        int maxCount = 1;
+        switch (this)
+        {
+            case FrontAttack:
+                maxCount = ((FrontAttackBase)attackBase).maxCount;
+                break;
+            case RangeAttack:
+                maxCount = ((RangeAttackBase)attackBase).maxCount;
+                break;
+            default:
+                break;
+        }
+        projectilePool = new ObjectPool<Projectile>(CreateProjectile, OnGetProjectile, OnReleaseProjectile, OnDestroyProjectile, maxSize: maxCount * 3);
     }
+
+    private Projectile CreateProjectile()
+    {
+        Projectile projectile = Instantiate(attackBase.projectile);
+        projectile.SetPool(projectilePool);
+        return projectile;
+    }
+
+    private void OnGetProjectile(Projectile projectile) => projectile.gameObject.SetActive(true);
+
+    private void OnReleaseProjectile(Projectile projectile) => projectile.gameObject.SetActive(false);
+
+    private void OnDestroyProjectile(Projectile projectile) => Destroy(projectile.gameObject);
 
     public abstract void Execute(Transform attackPivot, Vector3 dir, int level, float distanceRatio);
 
@@ -47,15 +76,18 @@ public abstract class Attack : MonoBehaviour
         switch (this)
         {
             case FrontAttack:
-                indicator = GetComponent<SquareIndicator>();
+                indicator = GetComponent<FrontIndicator>();
+                indicator?.DrawRange(dir.normalized, this);
                 break;
             case RangeAttack:
-                indicator = GetComponent<SectorIndicator>();
+                indicator = GetComponent<RangeIndicator>();
+                indicator?.DrawRange(dir.normalized, this);
                 break;
             case ThrowAttack:
+                indicator = GetComponent<ThrowIndicator>();
+                indicator?.DrawRange(dir, this);
                 break;
         }
-        indicator?.DrawRange(dir, this);
     }
 
     public void StopShowRange()
@@ -64,12 +96,13 @@ public abstract class Attack : MonoBehaviour
         switch (this)
         {
             case FrontAttack:
-                indicator = GetComponent<SquareIndicator>();
+                indicator = GetComponent<FrontIndicator>();
                 break;
             case RangeAttack:
-                indicator = GetComponent<SectorIndicator>();
+                indicator = GetComponent<RangeIndicator>();
                 break;
             case ThrowAttack:
+                indicator = GetComponent<ThrowIndicator>();
                 break;
         }
         indicator?.Clear();

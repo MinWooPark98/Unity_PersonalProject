@@ -16,7 +16,7 @@ public class FrontAttack : Attack
         var damage = thisBase.damage + thisBase.growthDamage * level;
         while (true)
         {
-            var pro = Instantiate(attackBase.projectile);
+            var pro = projectilePool.Get();
             pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime,
                 thisBase.distance, damage, level, followUp, thisBase.isPenetrable);
             if (DoAttack != null)

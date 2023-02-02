@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513ffda8a8db7dd4db3a1edde311a21e, type: 3}
   m_Name: SoldierBasicAttack
   m_EditorClassIdentifier: 
-  obtainGauge: 20
+  obtainGauge: 40
   distance: 10
   arrivalTime: 1
   damage: 5

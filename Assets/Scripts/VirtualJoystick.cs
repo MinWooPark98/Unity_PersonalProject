@@ -49,7 +49,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
         }
         Vector3 touchPosV3 = new Vector3(touchPos.x, 0f, touchPos.y);
         if (OnStickDrag != null)
-            OnStickDrag.Invoke(touchPosV3.normalized);
+            OnStickDrag.Invoke(touchPosV3);
     }
 
     public void OnPointerUp(PointerEventData eventData)

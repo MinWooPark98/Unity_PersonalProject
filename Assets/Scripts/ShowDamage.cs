@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class ShowDamage : MonoBehaviour
 {
@@ -11,6 +12,12 @@ public class ShowDamage : MonoBehaviour
     private float duration;
     private float timer = 0f;
     private float refloatY;
+
+    private IObjectPool<ShowDamage> pool;
+
+    public void SetPool(IObjectPool<ShowDamage> pool) => this.pool = pool;
+
+    private void OnEnable() => timer = 0f;
 
     private void Awake()
     {
@@ -33,7 +40,7 @@ public class ShowDamage : MonoBehaviour
         transform.forward = mainCam.forward;
         if (timer >= duration)
         {
-            Destroy(gameObject);
+            pool.Release(this);
             return;
         }
         transform.Translate(refloatY * Time.deltaTime * Vector3.up / duration);

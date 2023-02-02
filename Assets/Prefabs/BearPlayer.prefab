@@ -247,6 +247,14 @@ PrefabInstance:
       propertyPath: controller
       value: 
       objectReference: {fileID: 8871164100823816535}
+    - target: {fileID: 4744705771313474252, guid: 372f8445b9ebb0e47a7114e2eb570567, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4744705771313474252, guid: 372f8445b9ebb0e47a7114e2eb570567, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6584615953700794486, guid: 372f8445b9ebb0e47a7114e2eb570567, type: 3}
       propertyPath: m_Name
       value: BasicAttackGauge
@@ -293,6 +301,10 @@ PrefabInstance:
       propertyPath: skillControllerBase
       value: 
       objectReference: {fileID: 11400000, guid: 7b7c6d1d2d819004399ae8a2d748bf9e, type: 2}
+    - target: {fileID: 3495371359632420143, guid: 40a26a4e4061e9f4ea51f3d1f7ea3730, type: 3}
+      propertyPath: effect
+      value: 
+      objectReference: {fileID: 4602180010126516476}
     - target: {fileID: 3495371359632420143, guid: 40a26a4e4061e9f4ea51f3d1f7ea3730, type: 3}
       propertyPath: hpBarReal
       value: 
@@ -345,6 +357,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6151732946456041382, guid: 40a26a4e4061e9f4ea51f3d1f7ea3730, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.309
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 40a26a4e4061e9f4ea51f3d1f7ea3730, type: 3}
 --- !u!4 &8871164100823816515 stripped
@@ -392,6 +408,24 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackBase: {fileID: 11400000, guid: d9c112c293f901d4d84897a3a485bb0b, type: 2}
+--- !u!114 &4602180010126516476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8871164100823816541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fd9b595236ce349a034b1fa187e925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3079978303431601061, guid: ae15a6db7637d8b4db4f63d83d3faae9, type: 3}
+  height: 2
+  duration: 1
+  refloatY: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  characterSize: 6
 --- !u!1001 &7251352447434669211
 PrefabInstance:
   m_ObjectHideFlags: 0
