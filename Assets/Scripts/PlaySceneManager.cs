@@ -1,8 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
-public class PlaySceneManager : MonoBehaviour
+public class PlaySceneManager : MonoBehaviourPunCallbacks
 {
     private static PlaySceneManager m_instance;
     public static PlaySceneManager instance
@@ -37,5 +39,12 @@ public class PlaySceneManager : MonoBehaviour
     private void Update()
     {
         playTimer += Time.deltaTime;
+
+        // if () 내가 죽으면 leave button활성화, 누르면 LeaveRoom();
     }
+
+    //public override void OnLeftRoom()
+    //{
+    //    //SceneManager.LoadScene("Lobby");
+    //}
 }

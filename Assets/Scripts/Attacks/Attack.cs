@@ -37,7 +37,7 @@ public abstract class Attack : MonoBehaviour
                 break;
         }
         projectilePool = new ObjectPool<Projectile>(CreateProjectile, OnGetProjectile, OnReleaseProjectile, OnDestroyProjectile, maxSize: maxCount * 3);
-        if (attackBase.followUp.effectPrefab != null)
+        if (attackBase.followUp != null && attackBase.followUp.effectPrefab != null)
         {
             followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, OnGetFollowUpEffect, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount * 3); ;
             followUp.SetPool(followUpEffectPool);

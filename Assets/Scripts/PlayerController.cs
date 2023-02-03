@@ -57,6 +57,8 @@ public class PlayerController : MonoBehaviour
         skillAttackStick.OnStickDrag.AddListener(skillController.ShowAttackRange);
         skillAttackStick.OnStickUp.AddListener((x, y) => { skillController.StopShowAttackRange(); });
         skillAttackStick.OnStickUp.AddListener(SkillAttack);
+
+        Camera.main.GetComponent<CameraController>().player = transform;
     }
 
     void Update()
