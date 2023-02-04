@@ -15,6 +15,8 @@ public class LogoMove : MonoBehaviour
     private float timer;
     private bool isMoving;
 
+    public GameObject inputPanel;
+
     void Start()
     {
         startYPos = Screen.height * startPosYScreenRatio;
@@ -34,6 +36,7 @@ public class LogoMove : MonoBehaviour
         {
             transform.position = new Vector3(xPos, endYPos, 0f);
             isMoving = false;
+            inputPanel.SetActive(true);
             return;
         }
         transform.position = new Vector3(xPos, startYPos + deltaY * timer, 0f);

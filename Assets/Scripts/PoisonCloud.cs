@@ -34,7 +34,7 @@ public class PoisonCloud : MonoBehaviour
         damageTimer += Time.deltaTime;
         if (damageTimer >= damageCycle)
         {
-            var players = PlaySceneManager.instance.players;
+            var players = GameObject.FindGameObjectsWithTag("Player");
             var mapSize = PlaySceneManager.instance.mapSize;
             foreach (var player in players)
             {

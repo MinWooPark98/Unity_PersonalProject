@@ -24,7 +24,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 745211399}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.279, y: 0.361, z: 1.263}
+  m_LocalPosition: {x: 0.279, y: 0.4, z: 0.462}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1064,13 +1064,14 @@ GameObject:
   - component: {fileID: 1894123274}
   - component: {fileID: 1894123282}
   - component: {fileID: 1894123293}
+  - component: {fileID: 1399752056}
   m_Layer: 0
   m_Name: Veteran
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1343755915957405030
 Transform:
   m_ObjectHideFlags: 0
@@ -1147,11 +1148,11 @@ MonoBehaviour:
   speed: 5
   rotateSpeed: 5
   basicController: {fileID: 2168215906284898985}
-  skillController: {fileID: 0}
+  skillController: {fileID: 7432012235453170551}
   basicAttackAnimName: BasicAttack
   basicAttackAnimIsLoop: 1
-  skillAttackAnimName: 
-  skillAttackAnimIsLoop: 0
+  skillAttackAnimName: BasicAttack
+  skillAttackAnimIsLoop: 1
   attackPivot: {fileID: 745211400}
 --- !u!114 &2168215906284898985
 MonoBehaviour:
@@ -1166,7 +1167,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basicControllerBase: {fileID: 11400000, guid: efec1155e41b10349ae492b1ec140b5e, type: 2}
-  attack: {fileID: 0}
+  attack: {fileID: 2069754588339344192}
 --- !u!114 &2069754588339344192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1192,6 +1193,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47d54bf7e4d82e2459ec1ebf212d5511, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillControllerBase: {fileID: 11400000, guid: 451e4b17fcc72e14e90d1ca6c6769369, type: 2}
+  attack: {fileID: 7177107026820203555}
 --- !u!114 &7177107026820203555
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1204,7 +1207,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8db832a7d333cb3468604dfdecf9ffb8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackBase: {fileID: 0}
+  attackBase: {fileID: 11400000, guid: 6ca09d5b6b637ce4d9861549350c5fa4, type: 2}
 --- !u!95 &1177138684
 Animator:
   serializedVersion: 5
@@ -1238,6 +1241,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   id: 1
+  effect: {fileID: 1399752056}
 --- !u!114 &1894123282
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1274,12 +1278,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eaa54993e7b1b5489d1876b23e172e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewWidth: 3
+  viewWidth: 1.5
   viewMeshFilter: {fileID: 0}
   viewMeshRenderer: {fileID: 0}
   obstacleMask:
     serializedVersion: 2
     m_Bits: 2048
+--- !u!114 &1399752056
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1343755915957405032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 74fd9b595236ce349a034b1fa187e925, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  prefab: {fileID: 3079978303431601061, guid: ae15a6db7637d8b4db4f63d83d3faae9, type: 3}
+  height: 2
+  duration: 1
+  refloatY: 1
+  color: {r: 1, g: 1, b: 1, a: 1}
+  characterSize: 6
 --- !u!1 &1343755915980108769
 GameObject:
   m_ObjectHideFlags: 0

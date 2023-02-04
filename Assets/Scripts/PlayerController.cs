@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviour
+public class PlayerController : MonoBehaviourPun
 {
     public int level { get; private set; } = 0;
 
@@ -44,6 +45,8 @@ public class PlayerController : MonoBehaviour
 
     private void Start()
     {
+        if (!photonView.IsMine)
+            return;
         basicController.attack.EndAttack = EndAttack;
         basicController.attack.DoAttack = BasicAttackAnimPlay;
         skillController.attack.EndAttack = EndAttack;
@@ -63,6 +66,8 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine)
+            return;
         skillAvailability.value = skillController.gaugeRatio;
         if (playerInput.isMoving)
         {

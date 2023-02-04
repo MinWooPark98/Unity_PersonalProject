@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class StartSceneManager : MonoBehaviour
 {
     public GameObject logo;
-    public GameObject inputPanel;
     private bool firstInput = false;
     public TMP_InputField inputName;
     public TextMeshProUGUI log;
@@ -21,7 +20,6 @@ public class StartSceneManager : MonoBehaviour
     void Start()
     {
         logo.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0f);
-        inputPanel.SetActive(false);
         inputName.text = string.Empty;
         log.gameObject.SetActive(false);
     }
@@ -33,7 +31,6 @@ public class StartSceneManager : MonoBehaviour
             if (Input.anyKeyDown)
             {
                 logo.GetComponent<LogoMove>()?.Move();
-                inputPanel.SetActive(true);
             }
         }
 

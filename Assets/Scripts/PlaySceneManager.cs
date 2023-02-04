@@ -20,8 +20,7 @@ public class PlaySceneManager : MonoBehaviourPunCallbacks
     public float playTimeLimit = 30f;
     private float playTimer;
     public float GameProgress { get => playTimer / playTimeLimit; }
-    public GameObject playerPrefab;   // 임시 - 온라인으로 바꾸면 캐릭터들 prefab 전부 가진 후에 플레이어들이 선택한 캐릭터 생성
-    public LinkedList<GameObject> players = new LinkedList<GameObject>();
+    public GameObject[] playerPrefabs;   // 임시 - 온라인으로 바꾸면 캐릭터들 prefab 전부 가진 후에 플레이어들이 선택한 캐릭터 생성
     public GameObject frontArea;
     public GameObject rangeArea;
     public SpriteRenderer throwArea;
@@ -32,13 +31,14 @@ public class PlaySceneManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         playTimer = 0f;
-        var player = Instantiate(playerPrefab, Vector3.zero, Quaternion.identity);
-        players.AddLast(player);
+        PhotonNetwork.Instantiate(playerPrefabs[0].name, Vector3.zero, Quaternion.identity);
+        Debug.Log(PhotonNetwork.IsMasterClient);
     }
 
     private void Update()
     {
-        playTimer += Time.deltaTime;
+        if (PhotonNetwork.IsMasterClient)
+            playTimer += Time.deltaTime;
 
         // if () 내가 죽으면 leave button활성화, 누르면 LeaveRoom();
     }

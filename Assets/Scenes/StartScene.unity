@@ -140,7 +140,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &54886258
 RectTransform:
   m_ObjectHideFlags: 0
@@ -435,9 +435,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   logo: {fileID: 956552646}
-  inputPanel: {fileID: 54886257}
   inputName: {fileID: 1970144272}
   log: {fileID: 80128968}
+  logDuration: 0.5
 --- !u!1 &386993961
 GameObject:
   m_ObjectHideFlags: 0
@@ -645,7 +645,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c2f8f2afd1b5a4247a029a31a05c50a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerName: 
+  participants: 10
 --- !u!4 &798036998
 Transform:
   m_ObjectHideFlags: 0
@@ -720,7 +720,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uAC8C\uC784 \uC774\uB984 \uD07C\uC9C1\uD558\uAC8C"
+  m_text: "\uBC30\uD2C0 \uB85C\uC584"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3af9658f748406f49baeab0e0466105e, type: 2}
   m_sharedMaterial: {fileID: 4285055268611437611, guid: 3af9658f748406f49baeab0e0466105e, type: 2}
@@ -809,9 +809,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5330b20540b64184fb4d47d84865f44e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  startPosYScreenRatio: 0.5
+  startPosYScreenRatio: 0.6
   endPosYScreenRatio: 0.75
   movingTime: 0.3
+  inputPanel: {fileID: 54886257}
 --- !u!1 &1038560635
 GameObject:
   m_ObjectHideFlags: 0

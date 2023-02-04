@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
 
     private string playerName;
     private Characters character;
-    public byte participants = 10;
 
     private void Awake()
     {
