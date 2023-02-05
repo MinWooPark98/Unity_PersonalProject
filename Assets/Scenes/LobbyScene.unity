@@ -5264,7 +5264,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 299120556}
         m_TargetAssemblyTypeName: LobbySceneManager, Assembly-CSharp
-        m_MethodName: Unjoin
+        m_MethodName: LeaveRoom
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

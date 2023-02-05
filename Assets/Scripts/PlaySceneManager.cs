@@ -31,15 +31,18 @@ public class PlaySceneManager : MonoBehaviourPunCallbacks
     private void Awake()
     {
         playTimer = 0f;
-        PhotonNetwork.Instantiate(playerPrefabs[0].name, Vector3.zero, Quaternion.identity);
-        Debug.Log(PhotonNetwork.IsMasterClient);
+        //PhotonNetwork.ConnectUsingSettings();
+        //PhotonNetwork.Instantiate(playerPrefabs[0].name, Vector3.zero, Quaternion.identity);
+    }
+
+    public override void OnConnectedToMaster()
+    {
+        //PhotonNetwork.JoinOrCreateRoom("Room", new Photon.Realtime.RoomOptions { MaxPlayers = 2 }, null);
     }
 
     private void Update()
     {
-        if (PhotonNetwork.IsMasterClient)
-            playTimer += Time.deltaTime;
-
+        playTimer += Time.deltaTime;
         // if () 내가 죽으면 leave button활성화, 누르면 LeaveRoom();
     }
 

@@ -95,6 +95,43 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         characterAnimators[characterIndex].SetTrigger($"Action{UnityEngine.Random.Range(1, 4)}");
     }
 
+    public void JoinRandomRoom()
+    {
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.JoinRandomRoom();
+        else
+            PhotonNetwork.ConnectUsingSettings();
+    }
+
+    public void CreateRoom()
+    {
+        maxPlayers = byte.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);
+        playTime = int.Parse(playTimeDropdown.options[playTimeDropdown.value].text);
+        RoomOptions roomOptions = new RoomOptions();
+        roomOptions.IsOpen = true;
+        roomOptions.IsVisible = true;
+        roomOptions.MaxPlayers = maxPlayers;
+        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "PlayTime", playTime } };
+        roomOptions.CustomRoomPropertiesForLobby = new string[] { "PlayTime" };
+        //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "Map", map } };
+        //roomOptions.CustomRoomPropertiesForLobby = new string[] { "Map" };
+        PhotonNetwork.CreateRoom(roomName.text, roomOptions: roomOptions);
+        Debug.Log("Create Room");
+    }
+
+    public void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
+
+    public void LeaveRoom()
+    {
+        PhotonNetwork.LeaveRoom();
+    }
+
+    public void EnterGame()
+    {
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.LoadLevel("PlayScene");
+    }
+
     public override void OnConnectedToMaster()
     {
         participateButton.interactable = true;
@@ -114,19 +151,29 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         Debug.Log(message + "\nCreate Room");
     }
 
-    public override void OnLeftRoom()
-    {
-        Debug.Log("Left");
-        loadingPanel.SetActive(true);
-    }
-
     public override void OnJoinedRoom()
     {
         Debug.Log($"Joined Room : { PhotonNetwork.CurrentRoom.Name }");
-        Time.timeScale = 0f;
         loadingPanel.SetActive(true);
         connectMessage.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
-        Debug.Log(PhotonNetwork.IsMasterClient);
+    }
+
+    public override void OnJoinRoomFailed(short returnCode, string message)
+    {
+        base.OnJoinRoomFailed(returnCode, message);
+        Debug.Log("Join fail");
+    }
+
+    public override void OnLeftRoom()
+    {
+        Debug.Log("Left");
+        loadingPanel.SetActive(false);
+    }
+
+    public override void OnPlayerLeftRoom(Player otherPlayer)
+    {
+        Debug.Log("PlayerLeft");
+        loadingPanel.SetActive(false);
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -150,13 +197,13 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             {
                 if (!roomDict.ContainsKey(room.Name))
                 {
-                    RoomButton newButton = roomPool.Get();
-                    newButton.Set(
+                    roomButton = roomPool.Get();
+                    roomButton.Set(
                         room.Name,
                         room.CustomProperties.ContainsKey("PlayTime") ? room.CustomProperties["PlayTime"].ToString() : null,
                         "고정 단일맵",   // 아직 맵 1개라 고정 단일맵으로 출력
                         $"{room.PlayerCount} / {room.MaxPlayers}");
-                    roomDict.Add(room.Name, newButton);
+                    roomDict.Add(room.Name, roomButton);
                 }
                 else
                 {
@@ -165,37 +212,5 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
                 }
             }
         }
-    }
-
-    public void JoinRandomRoom()
-    {
-        if (PhotonNetwork.IsConnected)
-            PhotonNetwork.JoinRandomRoom();
-        else
-            PhotonNetwork.ConnectUsingSettings();
-    }
-
-    public void CreateRoom()
-    {
-        maxPlayers = byte.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);
-        playTime = int.Parse(playTimeDropdown.options[playTimeDropdown.value].text);
-        RoomOptions roomOptions = new RoomOptions();
-        roomOptions.MaxPlayers = maxPlayers;
-        roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "PlayTime", playTime } };
-        roomOptions.CustomRoomPropertiesForLobby = new string[] { "PlayTime" };
-        //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "Map", map } };
-        //roomOptions.CustomRoomPropertiesForLobby = new string[] { "Map" };
-        PhotonNetwork.CreateRoom(roomName.text, roomOptions: roomOptions);
-        Debug.Log("Create Room");
-    }
-
-    public void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
-
-    public void Unjoin() => PhotonNetwork.LeaveRoom();
-
-    public void EnterGame()
-    {
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.LoadLevel("PlayScene");
     }
 }

@@ -1,10 +1,11 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading;
 using UnityEditor;
 using UnityEngine;
 
-public class PoisonCloud : MonoBehaviour
+public class PoisonCloud : MonoBehaviourPun
 {
     public int initCount = 100;
     public ParticleSystem normal;
@@ -21,6 +22,8 @@ public class PoisonCloud : MonoBehaviour
 
     private void Start()
     {
+        if (!photonView.IsMine)
+            return;
         lastProgress = 0f;
         normalShape = normal.shape;
         reverseShape = reverse.shape;
@@ -31,6 +34,8 @@ public class PoisonCloud : MonoBehaviour
 
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
         damageTimer += Time.deltaTime;
         if (damageTimer >= damageCycle)
         {

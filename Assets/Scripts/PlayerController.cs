@@ -6,6 +6,8 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviourPun
 {
+    public PhotonView pv;
+
     public int level { get; private set; } = 0;
 
     public static readonly int HashMove = Animator.StringToHash("isMoving");
@@ -60,8 +62,7 @@ public class PlayerController : MonoBehaviourPun
         skillAttackStick.OnStickDrag.AddListener(skillController.ShowAttackRange);
         skillAttackStick.OnStickUp.AddListener((x, y) => { skillController.StopShowAttackRange(); });
         skillAttackStick.OnStickUp.AddListener(SkillAttack);
-
-        Camera.main.GetComponent<CameraController>().player = transform;
+        skillAttackStick.gameObject.SetActive(false);
     }
 
     void Update()
@@ -69,6 +70,12 @@ public class PlayerController : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
         skillAvailability.value = skillController.gaugeRatio;
+        Move();// pv.RPC("Move", RpcTarget.All);
+    }
+
+    //[PunRPC]
+    public void Move()
+    {
         if (playerInput.isMoving)
         {
             animator.SetBool(HashMove, true);
