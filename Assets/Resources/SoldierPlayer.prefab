@@ -1741,7 +1741,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9eaa54993e7b1b5489d1876b23e172e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  viewWidth: 2
+  viewWidth: 1.5
   viewMeshFilter: {fileID: 0}
   viewMeshRenderer: {fileID: 0}
   obstacleMask:

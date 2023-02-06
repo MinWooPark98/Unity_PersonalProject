@@ -32,6 +32,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -99,6 +100,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable
             timer += Time.deltaTime;
             if (timer >= arrivalTime)
             {
+                FollowAttack();
                 pool.Release(this);
             }
 
@@ -130,6 +132,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Solid"))
         {
+            Debug.Log(gameObject.activeSelf);
             FollowAttack();
             pool.Release(this);
             return;

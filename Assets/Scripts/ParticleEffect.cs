@@ -13,6 +13,7 @@ public class ParticleEffect : MonoBehaviourPun
     private void Start()
     {
         particle = GetComponent<ParticleSystem>();
+        gameObject.SetActive(false);
     }
 
     private void OnEnable()

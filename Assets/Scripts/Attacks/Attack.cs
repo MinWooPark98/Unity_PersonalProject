@@ -84,7 +84,6 @@ public abstract class Attack : MonoBehaviourPun
     private ParticleEffect CreateFollowUpEffect()
     {
         ParticleEffect effect = PhotonNetwork.Instantiate(attackBase.followUp.effectPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<ParticleEffect>(); ;
-        effect.gameObject.SetActive(false);
         effect.SetPool(followUpEffectPool);
         return effect;
     }
