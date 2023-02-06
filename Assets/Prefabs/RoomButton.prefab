@@ -1035,10 +1035,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 844b286185819734e8cb56b0b65f26d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  roomName: {fileID: 0}
-  playTime: {fileID: 0}
-  map: {fileID: 0}
-  participants: {fileID: 0}
+  roomName: {fileID: 7565007214287626126}
+  playTime: {fileID: 7565007212829057754}
+  map: {fileID: 7565007213614075940}
+  participants: {fileID: 7565007212729735482}
 --- !u!1 &7565007214287626124
 GameObject:
   m_ObjectHideFlags: 0

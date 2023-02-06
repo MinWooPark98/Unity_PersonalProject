@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -15,8 +16,7 @@ public class AreaAttack : AttackFollowUp
     {
         var thisBase = (AreaAttackBase)followUpBase;
         var effect = effectPool.Get();
-        effect.transform.position = pos;
-        effect.transform.localScale = new Vector3(thisBase.radius * 2f, thisBase.radius * 2f, 0f);
+        effect.SetAll(pos, new Vector3(thisBase.radius * 2f, thisBase.radius * 2f, 0f));
         var cols = Physics.OverlapSphere(pos, thisBase.radius); // 구 안에 들어있는 모든 colliders return
         var damage = thisBase.damage + thisBase.growthDamage * level;
         foreach (var col in cols)
@@ -24,7 +24,7 @@ public class AreaAttack : AttackFollowUp
             var health = col.GetComponent<Health>();
             if (health != null && col.gameObject != attacker)
             {
-                health.OnDamage(damage);
+                health.OnDamageOnServer(damage);
             }
         }
     }

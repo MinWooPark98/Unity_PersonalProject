@@ -4,10 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerController : MonoBehaviourPun
+public class PlayerController : MonoBehaviourPun, IPunObservable
 {
-    public PhotonView pv;
-
     public int level { get; private set; } = 0;
 
     public static readonly int HashMove = Animator.StringToHash("isMoving");
@@ -33,6 +31,9 @@ public class PlayerController : MonoBehaviourPun
 
     public Transform attackPivot;
     private bool isAttacking = false;
+
+    public Vector3 clonePos;
+    public Quaternion cloneRot;
 
     void Awake()
     {
@@ -70,25 +71,46 @@ public class PlayerController : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
         skillAvailability.value = skillController.gaugeRatio;
-        Move();// pv.RPC("Move", RpcTarget.All);
+        Move();
     }
 
-    //[PunRPC]
-    public void Move()
+    private void Move()
     {
-        if (playerInput.isMoving)
+        if (photonView.IsMine)
         {
-            animator.SetBool(HashMove, true);
-            var dir = new Vector3(playerInput.moveH, 0f, playerInput.moveV).normalized;
-            rb.velocity = dir * speed;
-            if (!isAttacking)
-                transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir),
-                    Time.deltaTime * 180f / Quaternion.Angle(transform.rotation, Quaternion.LookRotation(dir)) * rotateSpeed);
+            if (playerInput.isMoving)
+            {
+                animator.SetBool(HashMove, true);
+                var dir = new Vector3(playerInput.moveH, 0f, playerInput.moveV).normalized;
+                rb.velocity = dir * speed;
+                if (!isAttacking)
+                    transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir),
+                        Time.deltaTime * 180f / Quaternion.Angle(transform.rotation, Quaternion.LookRotation(dir)) * rotateSpeed);
+            }
+            else
+            {
+                animator.SetBool(HashMove, false);
+                rb.velocity = Vector3.zero;
+            }
         }
         else
         {
-            animator.SetBool(HashMove, false);
-            rb.velocity = Vector3.zero;
+            transform.position = Vector3.Lerp(transform.position, clonePos, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, cloneRot, Time.deltaTime * 10f);
+        }
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            clonePos = (Vector3)stream.ReceiveNext();
+            cloneRot = (Quaternion)stream.ReceiveNext();
         }
     }
 

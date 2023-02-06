@@ -55,13 +55,17 @@ public class RangeIndicator : AttackIndicator
 
     private void Awake()
     {
-        var indicator = PlaySceneManager.instance.rangeArea;
+        if (!photonView.IsMine)
+            return;
+        var indicator = GameManager.instance.rangeArea;
         viewMeshFilter = indicator.GetComponent<MeshFilter>();
         viewMeshRenderer = indicator.GetComponent<MeshRenderer>();
     }
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -81,6 +85,8 @@ public class RangeIndicator : AttackIndicator
 
     public override void DrawRange(Vector3 dir, Attack attack)
     {
+        if (!photonView.IsMine)
+            return;
         attacker = attack.transform;
         lookDir = dir;
         viewRadius = attack.attackBase.distance;
@@ -91,6 +97,8 @@ public class RangeIndicator : AttackIndicator
 
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isDrawing)
             return;
         int stepCount = Mathf.RoundToInt(viewAngle * meshResolution);
@@ -155,6 +163,8 @@ public class RangeIndicator : AttackIndicator
 
     public override void Clear()
     {
+        if (!photonView.IsMine)
+            return;
         viewMesh.Clear();
         viewMeshRenderer.enabled = false;
         isDrawing = false;

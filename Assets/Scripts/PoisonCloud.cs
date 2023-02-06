@@ -22,8 +22,6 @@ public class PoisonCloud : MonoBehaviourPun
 
     private void Start()
     {
-        if (!photonView.IsMine)
-            return;
         lastProgress = 0f;
         normalShape = normal.shape;
         reverseShape = reverse.shape;
@@ -34,13 +32,11 @@ public class PoisonCloud : MonoBehaviourPun
 
     private void Update()
     {
-        if (!photonView.IsMine)
-            return;
         damageTimer += Time.deltaTime;
-        if (damageTimer >= damageCycle)
+        if (PhotonNetwork.IsMasterClient && damageTimer >= damageCycle)
         {
             var players = GameObject.FindGameObjectsWithTag("Player");
-            var mapSize = PlaySceneManager.instance.mapSize;
+            var mapSize = GameManager.instance.mapSize;
             foreach (var player in players)
             {
                 var real = player.GetComponentInChildren<PlayerController>();
@@ -51,13 +47,13 @@ public class PoisonCloud : MonoBehaviourPun
                         playerPos.x > mapSize.x * 0.5f * (1 - lastProgress) ||
                         playerPos.z < -mapSize.y * 0.5f * (1 - lastProgress) ||
                         playerPos.z > mapSize.y * 0.5f * (1 - lastProgress))
-                        real.GetComponent<Health>()?.OnDamage(damage);
+                        real.GetComponent<Health>()?.OnDamageOnServer(damage);
                 }
             }
             damageTimer = 0f;
         }
 
-        float gameProgress = PlaySceneManager.instance.GameProgress;
+        float gameProgress = GameManager.instance.GameProgress;
         if (gameProgress > lastProgress + 0.05f)
         {
             Vector3 boxThickness = new Vector3(gameProgress * 0.5f, gameProgress * 0.5f, 0f);

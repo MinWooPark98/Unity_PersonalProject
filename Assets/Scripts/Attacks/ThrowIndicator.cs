@@ -17,13 +17,17 @@ public class ThrowIndicator : AttackIndicator
 
     private void Start()
     {
-        circle = PlaySceneManager.instance.throwArea;
-        line = PlaySceneManager.instance.throwLine;
+        if (!photonView.IsMine)
+            return;
+        circle = GameManager.instance.throwArea;
+        line = GameManager.instance.throwLine;
         line.positionCount = linePositionCount;
     }
 
     public override void DrawRange(Vector3 dir, Attack attack)
     {
+        if (!photonView.IsMine)
+            return;
         attacker = attack.transform;
         this.dir = dir;
         distance = attack.attackBase.distance;
@@ -36,6 +40,8 @@ public class ThrowIndicator : AttackIndicator
 
     public override void Clear()
     {
+        if (!photonView.IsMine)
+            return;
         circle.enabled = false;
         line.enabled = false;
         isDrawing = false;
@@ -43,6 +49,8 @@ public class ThrowIndicator : AttackIndicator
 
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isDrawing)
             return;
         circle.transform.position = attacker.position + dir * distance;

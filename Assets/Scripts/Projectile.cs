@@ -1,10 +1,13 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.ComponentModel;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Pool;
 
-public class Projectile : MonoBehaviour
+public class Projectile : MonoBehaviourPun, IPunObservable
 {
     private GameObject attacker;
     private Vector3 startPos;
@@ -23,6 +26,9 @@ public class Projectile : MonoBehaviour
     private LinkedList<GameObject> hitObjects = new LinkedList<GameObject>();
     private IObjectPool<Projectile> pool;
 
+    private Vector3 clonePos;
+    private Quaternion cloneRot;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -34,50 +40,88 @@ public class Projectile : MonoBehaviour
         hitObjects.Clear();
     }
 
-    private void OnDisable()
+    private void FollowAttack()
     {
         followAttack?.Execute(attacker, transform.position, level);
     }
 
+    [PunRPC]
+    public void SetActive(bool active) => gameObject.SetActive(active);
+    [PunRPC]
+    public void SetActiveOnServer(bool active)
+    {
+        photonView.RPC("SetActive", RpcTarget.All, active);
+    }
+
     public void SetPool(IObjectPool<Projectile> pool) => this.pool = pool;
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int obtainGauge, float arrivalTime, float distance, int damage, int level, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void SetBase(int obtainGauge, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
     {
-        this.attacker = attacker;
-        this.startPos = startPos;
-        this.direction = direction;
         this.obtainGauge = obtainGauge;
         this.arrivalTime = arrivalTime;
         this.distance = distance;
         this.damage = damage;
-        this.level = level;
         this.followAttack = followAttack;
+        this.height = height;
         this.isPenetrable = isPenetrable;
         this.isParabolic = isParabolic;
-        this.height = height;
+    }
+
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int level)
+    {
+        if (!photonView.IsMine)
+            return;
+        this.attacker = attacker;
+        this.startPos = startPos;
+        this.direction = direction;
+        this.level = level;
         transform.position = startPos;
+        SetInitialTransformOthers(startPos, direction);
+    }
+
+    [PunRPC]
+    public void SetInitialTransformOthers(Vector3 pos, Vector3 dir) => photonView.RPC("SetInitialTransform", RpcTarget.All, pos, dir);
+
+    [PunRPC]
+    public void SetInitialTransform(Vector3 pos, Vector3 dir)
+    {
+        transform.position = pos;
+        transform.rotation = Quaternion.LookRotation(dir);
+        clonePos = transform.position;
+        cloneRot = transform.rotation;
+        gameObject.SetActive(true);
     }
 
     private void Update()
     {
-        timer += Time.deltaTime;
-        if (timer >= arrivalTime)
+        if (photonView.IsMine)
         {
-            pool.Release(this);
-        }
+            timer += Time.deltaTime;
+            if (timer >= arrivalTime)
+            {
+                pool.Release(this);
+            }
 
-        if (isParabolic)
-            rb.MovePosition(BezierCurve());
+            if (isParabolic)
+                transform.position = BezierCurve();
+            else
+            {
+                Vector3 dir = direction;
+                rb.velocity = dir * distance / arrivalTime;
+                transform.forward = dir;
+            }
+        }
         else
         {
-            Vector3 dir = direction;
-            rb.velocity = dir * distance / arrivalTime;
-            transform.forward = dir;
+            transform.position = Vector3.Lerp(transform.position, clonePos, Time.deltaTime * 10f);
+            transform.rotation = Quaternion.Slerp(transform.rotation, cloneRot, Time.deltaTime * 10f);
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        if (!photonView.IsMine)
+            return;
         if (attacker == other.gameObject)
             return;
 
@@ -86,6 +130,7 @@ public class Projectile : MonoBehaviour
 
         if (other.gameObject.layer == LayerMask.NameToLayer("Solid"))
         {
+            FollowAttack();
             pool.Release(this);
             return;
         }
@@ -96,10 +141,13 @@ public class Projectile : MonoBehaviour
         if (subject != null)
         {
             attacker.GetComponent<SkillAttackController>().ObtainGauge(obtainGauge);
-            subject.OnDamage(damage);
+            subject.OnDamageOnServer(damage);
 
             if (!isPenetrable)
+            {
+                FollowAttack();
                 pool.Release(this);
+            }
         }
     }
 
@@ -111,5 +159,22 @@ public class Projectile : MonoBehaviour
         var p1 = Vector3.Lerp(startPos, halfPos, ratio);
         var p2 = Vector3.Lerp(halfPos, endPos, ratio);
         return Vector3.Lerp(p1, p2, ratio);
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        if (!gameObject.activeSelf)
+            return;
+
+        if (stream.IsWriting)
+        {
+            stream.SendNext(transform.position);
+            stream.SendNext(transform.rotation);
+        }
+        else
+        {
+            clonePos = (Vector3)stream.ReceiveNext();
+            cloneRot = (Quaternion)stream.ReceiveNext();
+        }
     }
 }

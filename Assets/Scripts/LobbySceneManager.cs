@@ -28,14 +28,15 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public Button participateButton;
     public TextMeshProUGUI connectMessage;
 
+    public GameObject LobbyPanel;
     public GameObject loadingPanel;
 
     // ·ë »ý¼º ½Ã¿¡¸¸ °ª Ã£¾Æ¿È
     public TMP_InputField roomName;
     public TMP_Dropdown maxPlayersDropdown;
-    private byte maxPlayers = 10;
+    private byte maxPlayers = 6;
     public TMP_Dropdown playTimeDropdown;
-    private int playTime;
+    private int playTime = 180;
     //public Dropdown map;
 
     public GameObject rooms;
@@ -119,15 +120,29 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         Debug.Log("Create Room");
     }
 
-    public void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
-
-    public void LeaveRoom()
+    public void JoinLobby()
     {
-        PhotonNetwork.LeaveRoom();
+        LobbyPanel.SetActive(true);
+        PhotonNetwork.JoinLobby();
+    }
+    public void LeaveLobby()
+    {
+        LobbyPanel.SetActive(false);
+        PhotonNetwork.LeaveLobby();
+    }
+    public void JoinRoom(string roomName) => PhotonNetwork.JoinRoom(roomName);
+    public void LeaveRoom() => PhotonNetwork.LeaveRoom();
+
+    [PunRPC]
+    public void SaveSelectedData()
+    {
+        PlayDataManager.instance.character = (Characters)characterIndex;
+        PlayDataManager.instance.playTime = playTime;
     }
 
     public void EnterGame()
     {
+        photonView.RPC("SaveSelectedData", RpcTarget.All);
         if (PhotonNetwork.IsMasterClient)
             PhotonNetwork.LoadLevel("PlayScene");
     }
@@ -145,9 +160,19 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         Debug.Log("Disconnect");
     }
 
+    public override void OnJoinedLobby()
+    {
+        Debug.Log("Joined Lobby");
+    }
+
+    public override void OnLeftLobby()
+    {
+        Debug.Log("Left Lobby");
+    }
+
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom(string.Empty, new RoomOptions() { MaxPlayers = 10 });
+        PhotonNetwork.CreateRoom("TEST", new RoomOptions() { MaxPlayers = 10, IsVisible = true });
         Debug.Log(message + "\nCreate Room");
     }
 
@@ -173,7 +198,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     public override void OnPlayerLeftRoom(Player otherPlayer)
     {
         Debug.Log("PlayerLeft");
-        loadingPanel.SetActive(false);
+        connectMessage.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
     }
 
     public override void OnPlayerEnteredRoom(Player newPlayer)
@@ -183,6 +208,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     public override void OnRoomListUpdate(List<RoomInfo> roomList)
     {
+        Debug.Log("!");
         RoomButton roomButton = null;
         foreach (var room in roomList)
         {
@@ -198,6 +224,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
                 if (!roomDict.ContainsKey(room.Name))
                 {
                     roomButton = roomPool.Get();
+                    Debug.Log(room.Name);
                     roomButton.Set(
                         room.Name,
                         room.CustomProperties.ContainsKey("PlayTime") ? room.CustomProperties["PlayTime"].ToString() : null,

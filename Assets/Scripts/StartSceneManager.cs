@@ -41,6 +41,7 @@ public class StartSceneManager : MonoBehaviour
             {
                 if (validInputExist)
                 {
+                    PlayDataManager.instance.playerName = inputName.text;
                     SceneManager.LoadScene("LobbyScene");
                     return;
                 }

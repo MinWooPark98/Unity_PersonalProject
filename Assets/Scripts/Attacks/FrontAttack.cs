@@ -17,8 +17,8 @@ public class FrontAttack : Attack
         while (true)
         {
             var pro = projectilePool.Get();
-            pro.Set(gameObject, attackPivot.position, dir, thisBase.obtainGauge, thisBase.arrivalTime,
-                thisBase.distance, damage, level, followUp, thisBase.isPenetrable);
+            pro.Set(gameObject, attackPivot.position, dir, level);
+            pro.SetActiveOnServer(true);
             if (DoAttack != null)
                 DoAttack();
             ++count;

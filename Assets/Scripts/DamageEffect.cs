@@ -1,9 +1,10 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DamageEffect : MonoBehaviour
+public class DamageEffect : MonoBehaviourPun
 {
     public ShowDamage prefab;
 
@@ -13,9 +14,16 @@ public class DamageEffect : MonoBehaviour
     public Color color;
     public float characterSize = 6f;
 
+    [PunRPC]
+    public void OnHitOnServer(int dmg)
+    {
+        photonView.RPC("OnHit", RpcTarget.All, dmg);
+    }
+
+    [PunRPC]
     public void OnHit(int dmg)
     {
-        var effect = PlaySceneManager.instance.showDamageLauncher.Get();
+        var effect = GameManager.instance.showDamageLauncher.Get();
         effect.transform.position = transform.position + new Vector3(Random.Range(0, 0.5f), 1f, Random.Range(0, 0.5f)) * height;
         effect.Set(dmg.ToString(), color, characterSize, duration, refloatY);
     }

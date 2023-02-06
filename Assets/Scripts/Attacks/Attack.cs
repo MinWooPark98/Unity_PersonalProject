@@ -1,9 +1,14 @@
+using Cinemachine;
+using Photon.Pun;
 using System;
 using System.Collections;
+using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
+using static Cinemachine.DocumentationSortingAttribute;
 
-public abstract class Attack : MonoBehaviour
+public abstract class Attack : MonoBehaviourPun
 {
     public AttackBase attackBase;
     protected AttackFollowUp followUp;
@@ -24,45 +29,67 @@ public abstract class Attack : MonoBehaviour
                 break;
         }
 
-        int maxCount = 1;
+        int maxCount = 3;
         switch (this)
         {
             case FrontAttack:
-                maxCount = ((FrontAttackBase)attackBase).maxCount;
+                maxCount = ((FrontAttackBase)attackBase).maxCount * 3;
                 break;
             case RangeAttack:
-                maxCount = ((RangeAttackBase)attackBase).maxCount;
+                maxCount = ((RangeAttackBase)attackBase).maxCount * 3;
                 break;
             default:
                 break;
         }
-        projectilePool = new ObjectPool<Projectile>(CreateProjectile, OnGetProjectile, OnReleaseProjectile, OnDestroyProjectile, maxSize: maxCount * 3);
+        projectilePool = new ObjectPool<Projectile>(CreateProjectile, null, OnReleaseProjectile, OnDestroyProjectile, maxSize: maxCount);
+        Queue<Projectile> list = new Queue<Projectile>();
+        for (int i = 0; i < maxCount; ++i)
+        {
+            list.Enqueue(projectilePool.Get());
+        }
+        for (int i = 0; i < list.Count; ++i)
+        {
+            var projectile = list.Dequeue();
+            projectilePool.Release(projectile);
+        }
+
         if (attackBase.followUp != null && attackBase.followUp.effectPrefab != null)
         {
-            followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, OnGetFollowUpEffect, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount * 3); ;
+            followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, null, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount * 3); ;
             followUp.SetPool(followUpEffectPool);
         }
     }
 
     private Projectile CreateProjectile()
     {
-        Projectile projectile = Instantiate(attackBase.projectile);
+        Projectile projectile = PhotonNetwork.Instantiate(attackBase.projectile.name, Vector3.zero, Quaternion.identity).GetComponent<Projectile>();
         projectile.SetPool(projectilePool);
+        bool isParabolic = false;
+        float height = 0;
+        switch (this)
+        {
+            case ThrowAttack:
+                isParabolic = true;
+                height = ((ThrowAttackBase)attackBase).throwHeight;
+                break;
+            default:
+                break;
+        }
+        projectile.SetBase(attackBase.obtainGauge, attackBase.arrivalTime, attackBase.distance, attackBase.damage, followUp, attackBase.isPenetrable, isParabolic, height);
         return projectile;
     }
-    private void OnGetProjectile(Projectile projectile) => projectile.gameObject.SetActive(true);
-    private void OnReleaseProjectile(Projectile projectile) => projectile.gameObject.SetActive(false);
-    private void OnDestroyProjectile(Projectile projectile) => Destroy(projectile.gameObject);
+    private void OnReleaseProjectile(Projectile projectile) => projectile.SetActiveOnServer(false);
+    private void OnDestroyProjectile(Projectile projectile) => PhotonNetwork.Destroy(projectile.gameObject);
 
     private ParticleEffect CreateFollowUpEffect()
     {
-        ParticleEffect effect = Instantiate(attackBase.followUp.effectPrefab);
+        ParticleEffect effect = PhotonNetwork.Instantiate(attackBase.followUp.effectPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<ParticleEffect>(); ;
+        effect.gameObject.SetActive(false);
         effect.SetPool(followUpEffectPool);
         return effect;
     }
-    private void OnGetFollowUpEffect(ParticleEffect effect) => effect.gameObject.SetActive(true);
-    private void OnReleaseFollowUpEffect(ParticleEffect effect) => effect.gameObject.SetActive(false);
-    private void OnDestroyFollowUpEffect(ParticleEffect effect) => Destroy(effect.gameObject);
+    private void OnReleaseFollowUpEffect(ParticleEffect effect) => effect.SetActiveOnServer(false);
+    private void OnDestroyFollowUpEffect(ParticleEffect effect) => PhotonNetwork.Destroy(effect.gameObject);
 
     public abstract void Execute(Transform attackPivot, Vector3 dir, int level, float distanceRatio);
 

@@ -19,13 +19,17 @@ public class FrontIndicator : AttackIndicator
 
     private void Awake()
     {
-        var indicator = PlaySceneManager.instance.frontArea;
+        if (!photonView.IsMine)
+            return;
+        var indicator = GameManager.instance.frontArea;
         viewMeshFilter = indicator.GetComponent<MeshFilter>();
         viewMeshRenderer = indicator.GetComponent<MeshRenderer>();
     }
 
     private void Start()
     {
+        if (!photonView.IsMine)
+            return;
         viewMesh = new Mesh();
         viewMesh.name = "View Mesh";
         viewMeshFilter.mesh = viewMesh;
@@ -33,6 +37,8 @@ public class FrontIndicator : AttackIndicator
 
     public override void DrawRange(Vector3 dir, Attack attack)
     {
+        if (!photonView.IsMine)
+            return;
         attacker = attack.transform;
         this.dir = dir;
         viewLength = attack.attackBase.distance;
@@ -42,6 +48,8 @@ public class FrontIndicator : AttackIndicator
 
     public override void Clear()
     {
+        if (!photonView.IsMine)
+            return;
         viewMesh.Clear();
         viewMeshRenderer.enabled = false;
         isDrawing = false;
@@ -49,6 +57,8 @@ public class FrontIndicator : AttackIndicator
 
     private void Update()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isDrawing)
             return;
         var len = viewLength;
