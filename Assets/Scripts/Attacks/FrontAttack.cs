@@ -17,7 +17,7 @@ public class FrontAttack : Attack
         while (true)
         {
             var pro = projectilePool.Get();
-            pro.Set(gameObject, attackPivot.position, dir, level);
+            pro.Set(gameObject, attackPivot.position, dir, damage, level);
             pro.SetActiveOnServer(true);
             if (DoAttack != null)
                 DoAttack();

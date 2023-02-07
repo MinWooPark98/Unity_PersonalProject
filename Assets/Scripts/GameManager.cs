@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         }
     }
 
+    private bool allPlayersLoaded = false;
+    private int loadedPlayers;
+    private float startTime;
     private float playTime;
     private float playTimer;
     public float GameProgress { get => playTimer / playTime; }
@@ -36,21 +39,54 @@ public class GameManager : MonoBehaviourPunCallbacks
     public Vector2 mapSize;
     public ShowDamageLancher showDamageLauncher;
 
-    private void Awake()
-    {
-        playTime = PlayDataManager.instance.playTime;
-        playTimer = 0f;
-    }
+    public GameObject loadingPanel;
+    public GameObject startPanel;
+    public GameObject resultPanel;
 
     private void Start()
     {
-        PhotonNetwork.Instantiate(playerPrefabs[(int)PlayDataManager.instance.character].name, Vector3.zero, Quaternion.identity);
+        playTime = PlayDataManager.instance.playTime;
+        playTimer = 0f;
+        var player = PhotonNetwork.Instantiate(playerPrefabs[(int)PlayDataManager.instance.character].name, Vector3.zero, Quaternion.identity);
+        PhotonNetwork.IsMessageQueueRunning = true;
+        if (PhotonNetwork.IsMasterClient)
+            StartCoroutine(CheckAllLoaded());
     }
 
     private void Update()
     {
-        playTimer += Time.deltaTime;
-        // if () 내가 죽으면 leave button활성화, 누르면 LeaveRoom();
+        if (!allPlayersLoaded)
+            return;
+        playTimer = Time.time - startTime;
+    }
+
+    private IEnumerator CheckAllLoaded()
+    {
+        while (true)
+        {
+            loadedPlayers = 1;
+            photonView.RPC("SendLoaded", RpcTarget.Others);
+            yield return new WaitForSeconds(1f);
+            if (loadedPlayers == PhotonNetwork.CountOfPlayers)
+            {
+                photonView.RPC("StartPlay", RpcTarget.All);
+                break;
+            }
+        }
+    }
+
+    [PunRPC]
+    public void SendLoaded() => photonView.RPC("LoadedCount", RpcTarget.MasterClient);
+
+    [PunRPC]
+    private void LoadedCount() => ++loadedPlayers;
+
+    [PunRPC]
+    public void StartPlay()
+    {
+        allPlayersLoaded = true;
+        startTime = Time.time;
+        loadingPanel.SetActive(false);
     }
 
     public override void OnLeftRoom()

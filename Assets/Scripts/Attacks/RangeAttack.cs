@@ -15,7 +15,7 @@ public class RangeAttack : Attack
             var pro = projectilePool.Get();
             var newDir = Vector3.Lerp(leftDir, rightDir, (float)i / thisBase.maxCount);
             var newDistance = thisBase.distance * Random.Range(0.9f, 1.1f);
-            pro.Set(gameObject, attackPivot.position, newDir, level);
+            pro.Set(gameObject, attackPivot.position, newDir, damage, level);
             pro.SetActiveOnServer(true);
         }
         if (DoAttack != null)

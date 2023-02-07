@@ -3,10 +3,8 @@ using Photon.Pun;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
-using static Cinemachine.DocumentationSortingAttribute;
 
 public abstract class Attack : MonoBehaviourPun
 {
@@ -55,7 +53,17 @@ public abstract class Attack : MonoBehaviourPun
 
         if (attackBase.followUp != null && attackBase.followUp.effectPrefab != null)
         {
-            followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, null, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount * 3); ;
+            followUpEffectPool = new ObjectPool<ParticleEffect>(CreateFollowUpEffect, null, OnReleaseFollowUpEffect, OnDestroyFollowUpEffect, maxSize: maxCount);
+            Queue<ParticleEffect> particleList = new Queue<ParticleEffect>();
+            for (int i = 0; i < maxCount; ++i)
+            {
+                particleList.Enqueue(followUpEffectPool.Get());
+            }
+            for (int i = 0; i < particleList.Count; ++i)
+            {
+                var particle = particleList.Dequeue();
+                followUpEffectPool.Release(particle);
+            }
             followUp.SetPool(followUpEffectPool);
         }
     }
@@ -75,7 +83,7 @@ public abstract class Attack : MonoBehaviourPun
             default:
                 break;
         }
-        projectile.SetBase(attackBase.obtainGauge, attackBase.arrivalTime, attackBase.distance, attackBase.damage, followUp, attackBase.isPenetrable, isParabolic, height);
+        projectile.SetBase(attackBase.obtainGauge, attackBase.arrivalTime, attackBase.distance, followUp, attackBase.isPenetrable, attackBase.isBreakable, isParabolic, height);
         return projectile;
     }
     private void OnReleaseProjectile(Projectile projectile) => projectile.SetActiveOnServer(false);
@@ -83,7 +91,7 @@ public abstract class Attack : MonoBehaviourPun
 
     private ParticleEffect CreateFollowUpEffect()
     {
-        ParticleEffect effect = PhotonNetwork.Instantiate(attackBase.followUp.effectPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<ParticleEffect>(); ;
+        ParticleEffect effect = PhotonNetwork.Instantiate(attackBase.followUp.effectPrefab.name, Vector3.zero, Quaternion.identity).GetComponent<ParticleEffect>();
         effect.SetPool(followUpEffectPool);
         return effect;
     }

@@ -19,6 +19,7 @@ public class Projectile : MonoBehaviourPun, IPunObservable
     private int damage;
     private int level;
     private bool isPenetrable = true;
+    private bool isBreakable = false;
     private bool isParabolic = false;
     private float height = 0f;
     private AttackFollowUp followAttack;
@@ -56,25 +57,26 @@ public class Projectile : MonoBehaviourPun, IPunObservable
 
     public void SetPool(IObjectPool<Projectile> pool) => this.pool = pool;
 
-    public void SetBase(int obtainGauge, float arrivalTime, float distance, int damage, AttackFollowUp followAttack, bool isPenetrable = true, bool isParabolic = false, float height = 0f)
+    public void SetBase(int obtainGauge, float arrivalTime, float distance, AttackFollowUp followAttack, bool isPenetrable = true, bool isBreakable = false, bool isParabolic = false, float height = 0f)
     {
         this.obtainGauge = obtainGauge;
         this.arrivalTime = arrivalTime;
         this.distance = distance;
-        this.damage = damage;
         this.followAttack = followAttack;
         this.height = height;
         this.isPenetrable = isPenetrable;
+        this.isBreakable = isBreakable;
         this.isParabolic = isParabolic;
     }
 
-    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int level)
+    public void Set(GameObject attacker, Vector3 startPos, Vector3 direction, int damage, int level)
     {
         if (!photonView.IsMine)
             return;
         this.attacker = attacker;
         this.startPos = startPos;
         this.direction = direction;
+        this.damage = damage;
         this.level = level;
         transform.position = startPos;
         SetInitialTransformOthers(startPos, direction);
@@ -130,9 +132,15 @@ public class Projectile : MonoBehaviourPun, IPunObservable
         if (hitObjects.Find(other.gameObject) != null)
             return;
 
+        if (isBreakable)
+        {
+            var breakable = other.GetComponent<BreakableObject>();
+            if (breakable != null)
+                breakable.BreakOnServer();
+        }
+
         if (other.gameObject.layer == LayerMask.NameToLayer("Solid"))
         {
-            Debug.Log(gameObject.activeSelf);
             FollowAttack();
             pool.Release(this);
             return;

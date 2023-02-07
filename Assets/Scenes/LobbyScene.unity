@@ -1378,7 +1378,8 @@ MonoBehaviour:
   characterCamera: {fileID: 474836367}
   participateButton: {fileID: 1080189616}
   connectMessage: {fileID: 1578432904}
-  LobbyPanel: {fileID: 1426583730}
+  lobbyPanel: {fileID: 1426583730}
+  createPanel: {fileID: 95551158}
   loadingPanel: {fileID: 1220557268}
   roomName: {fileID: 1625372343}
   maxPlayersDropdown: {fileID: 823764645}

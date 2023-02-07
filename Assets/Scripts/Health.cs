@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public abstract class Health : MonoBehaviourPun
 {
     public string id;
-    private int maxHp;
+    protected int maxHp;
     private int currHp;
     public float hpRatio { get => (float)currHp / maxHp; }
     public DamageEffect effect;

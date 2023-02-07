@@ -32,25 +32,28 @@ public class PoisonCloud : MonoBehaviourPun
 
     private void Update()
     {
-        damageTimer += Time.deltaTime;
-        if (PhotonNetwork.IsMasterClient && damageTimer >= damageCycle)
+        if (PhotonNetwork.IsMasterClient)
         {
-            var players = GameObject.FindGameObjectsWithTag("Player");
-            var mapSize = GameManager.instance.mapSize;
-            foreach (var player in players)
+            damageTimer += Time.deltaTime;
+            if (damageTimer >= damageCycle)
             {
-                var real = player.GetComponentInChildren<PlayerController>();
-                if (real != null)
+                var players = GameObject.FindGameObjectsWithTag("Player");
+                var mapSize = GameManager.instance.mapSize;
+                foreach (var player in players)
                 {
-                    var playerPos = real.transform.position;
-                    if (playerPos.x < -mapSize.x * 0.5f * (1 - lastProgress) ||
-                        playerPos.x > mapSize.x * 0.5f * (1 - lastProgress) ||
-                        playerPos.z < -mapSize.y * 0.5f * (1 - lastProgress) ||
-                        playerPos.z > mapSize.y * 0.5f * (1 - lastProgress))
-                        real.GetComponent<Health>()?.OnDamageOnServer(damage);
+                    var real = player.GetComponentInChildren<PlayerController>();
+                    if (real != null)
+                    {
+                        var playerPos = real.transform.position;
+                        if (playerPos.x < -mapSize.x * 0.5f * (1 - lastProgress) ||
+                            playerPos.x > mapSize.x * 0.5f * (1 - lastProgress) ||
+                            playerPos.z < -mapSize.y * 0.5f * (1 - lastProgress) ||
+                            playerPos.z > mapSize.y * 0.5f * (1 - lastProgress))
+                            real.GetComponent<Health>()?.OnDamage(damage);
+                    }
                 }
+                damageTimer = 0f;
             }
-            damageTimer = 0f;
         }
 
         float gameProgress = GameManager.instance.GameProgress;

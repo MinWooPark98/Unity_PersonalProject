@@ -11,6 +11,7 @@ public abstract class AttackBase : ScriptableObject
     public int damage;
     public int growthDamage;
     public bool isPenetrable = true;
+    public bool isBreakable;
     public float afterDelay;
     public AttackFollowUpBase followUp;
     public Projectile projectile;

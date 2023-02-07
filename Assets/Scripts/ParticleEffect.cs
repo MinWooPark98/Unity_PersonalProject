@@ -10,10 +10,10 @@ public class ParticleEffect : MonoBehaviourPun
     private IObjectPool<ParticleEffect> pool;
     private ParticleSystem particle;
 
-    private void Start()
+    private void Awake()
     {
         particle = GetComponent<ParticleSystem>();
-        gameObject.SetActive(false);
+        particle.gameObject.SetActive(false);
     }
 
     private void OnEnable()
@@ -36,7 +36,11 @@ public class ParticleEffect : MonoBehaviourPun
 
     public void SetPool(IObjectPool<ParticleEffect> pool) => this.pool = pool;
 
-    public void SetAll(Vector3 pos, Vector3 scale) => photonView.RPC("Set", RpcTarget.All, pos, scale);
+    [PunRPC]
+    public void SetAll(Vector3 pos, Vector3 scale)
+    {
+        photonView.RPC("Set", RpcTarget.All, pos, scale);
+    }
 
     [PunRPC]
     public void Set(Vector3 pos, Vector3 scale)

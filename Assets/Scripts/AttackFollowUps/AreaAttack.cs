@@ -21,10 +21,18 @@ public class AreaAttack : AttackFollowUp
         var damage = thisBase.damage + thisBase.growthDamage * level;
         foreach (var col in cols)
         {
+            if (col.gameObject == attacker)
+                continue;
+
             var health = col.GetComponent<Health>();
-            if (health != null && col.gameObject != attacker)
-            {
+            if (health != null)
                 health.OnDamageOnServer(damage);
+
+            if (thisBase.isBreakable)
+            {
+                var breakable = col.GetComponent<BreakableObject>();
+                if (breakable != null)
+                    breakable.BreakOnServer();
             }
         }
     }

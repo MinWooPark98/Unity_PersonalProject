@@ -18,6 +18,7 @@ MonoBehaviour:
   damage: 5
   growthDamage: 2
   isPenetrable: 1
+  isBreakable: 1
   afterDelay: 0.3
   followUp: {fileID: 11400000, guid: 1fe44206d0b0cd842acaad8f150a8aec, type: 2}
   projectile: {fileID: 3415746808101508657, guid: abc933e1eaef0214d88944dc02b5a3a3, type: 3}
