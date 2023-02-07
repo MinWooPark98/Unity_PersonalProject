@@ -1,3 +1,4 @@
+using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,7 +10,13 @@ public class HpBarUi : MonoBehaviour
     public Health subHealth;
     public float distanceFromSubjectPos = 2f;
     public Slider real;
+    public Image realFill;
     public Slider effect;
+
+    private void Start()
+    {
+        SetColor();
+    }
 
     void Update()
     {
@@ -20,5 +27,19 @@ public class HpBarUi : MonoBehaviour
         transform.position = subject.position + Camera.main.transform.up * distanceFromSubjectPos;
         if (!subject.gameObject.activeSelf)
             gameObject.SetActive(false);
+    }
+
+    private void SetColor()
+    {
+        if (subject.GetComponent<PlayerHealth>() != null)
+        {
+            var photonView = subject.GetComponent<PhotonView>();
+            if (photonView != null && photonView.IsMine)
+            {
+                realFill.color = Color.green;
+                return;
+            }
+        }
+        realFill.color = Color.red;
     }
 }
