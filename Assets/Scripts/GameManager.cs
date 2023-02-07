@@ -67,7 +67,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             loadedPlayers = 1;
             photonView.RPC("SendLoaded", RpcTarget.Others);
             yield return new WaitForSeconds(1f);
-            if (loadedPlayers == PhotonNetwork.CountOfPlayers)
+            if (loadedPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
             {
                 photonView.RPC("StartPlay", RpcTarget.All);
                 break;

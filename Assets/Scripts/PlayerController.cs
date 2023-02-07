@@ -6,8 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviourPun, IPunObservable
 {
-    public int level { get; private set; } = 0;
-
     public static readonly int HashMove = Animator.StringToHash("isMoving");
     public static readonly int HashEndAttack = Animator.StringToHash("endAttack");
 
@@ -28,6 +26,10 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     [SerializeField] private bool basicAttackAnimIsLoop;
     [SerializeField] private string skillAttackAnimName;
     [SerializeField] private bool skillAttackAnimIsLoop;
+
+    public int level { get; private set; } = 0;
+    public PlayerLevelUi levelUi;
+    public PlayerNameUi nameUi;
 
     public Transform attackPivot;
     private bool isAttacking = false;
@@ -50,6 +52,7 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             return;
+        SetNameUiOnServer();
         basicController.attack.EndAttack = EndAttack;
         basicController.attack.DoAttack = BasicAttackAnimPlay;
         skillController.attack.EndAttack = EndAttack;
@@ -160,5 +163,17 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         animator.SetTrigger(HashEndAttack);
     }
 
-    public void LevelUp() => level++;
+    public void LevelUpOnServer() => photonView.RPC("LevelUp", RpcTarget.All);
+
+    [PunRPC]
+    public void LevelUp()
+    {
+        levelUi.SetLevel(++level);
+        GetComponent<PlayerHealth>().MaxHpUp();
+    }
+
+    public void SetNameUiOnServer() => photonView.RPC("SetNameUi", RpcTarget.All, PlayDataManager.instance.playerName);
+
+    [PunRPC]
+    public void SetNameUi(string name) => nameUi.Set(name);
 }

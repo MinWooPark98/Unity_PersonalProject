@@ -1,30 +1,30 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HpBarUi : MonoBehaviour
+public class HpBarUi : FollowingObjectUi
 {
-    public Transform subject;
     public Health subHealth;
-    public float distanceFromSubjectPos = 2f;
     public Slider real;
     public Image realFill;
     public Slider effect;
+    public TextMeshProUGUI currHpText;
 
     private void Start()
     {
         SetColor();
     }
 
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         if (subject == null)
             return;
         real.value = subHealth.hpRatio;
         effect.value = Mathf.Lerp(effect.value, subHealth.hpRatio, Time.deltaTime);
-        transform.position = subject.position + Camera.main.transform.up * distanceFromSubjectPos;
         if (!subject.gameObject.activeSelf)
             gameObject.SetActive(false);
     }
@@ -42,4 +42,6 @@ public class HpBarUi : MonoBehaviour
         }
         realFill.color = Color.red;
     }
+
+    public void SetCurrHpText(int currHp) => currHpText.text = currHp.ToString();
 }

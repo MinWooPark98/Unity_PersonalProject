@@ -9,7 +9,7 @@ public class Item : MonoBehaviour
         var player = other.GetComponent<PlayerController>();
         if (player != null)
         {
-            player.LevelUp();
+            player.LevelUpOnServer();
             gameObject.SetActive(false);
         }
     }

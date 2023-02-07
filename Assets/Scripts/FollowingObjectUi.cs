@@ -4,15 +4,12 @@ using UnityEngine;
 
 public class FollowingObjectUi : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Transform subject;
+    public float distanceFromSubjectPos = 1f;
 
     // Update is called once per frame
-    void Update()
+    protected virtual void Update()
     {
-        
+        transform.position = subject.position + Camera.main.transform.up * distanceFromSubjectPos;
     }
 }

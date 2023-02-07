@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,28 +9,35 @@ public abstract class Health : MonoBehaviourPun
 {
     public string id;
     protected int maxHp;
-    private int currHp;
+    protected int currHp;
     public float hpRatio { get => (float)currHp / maxHp; }
     public DamageEffect effect;
+    public HpBarUi hpBarUi;
 
     void Start()
     {
         var table = DataTableMgr.GetTable<HealthData>();
         maxHp = table.Get(id).maxHp;
-        currHp = maxHp;
+        SetCurrHp(maxHp);
+    }
+
+    protected void SetCurrHp(int hp)
+    {
+        currHp = hp;
+        hpBarUi.SetCurrHpText(currHp);
     }
 
     public void OnDamageOnServer(int dmg) => photonView.RPC("OnDamage", RpcTarget.MasterClient, dmg);
 
     [PunRPC]
-    public void ApplyHealth(int currHp) => this.currHp = currHp;
+    public void ApplyHealth(int currHp) => SetCurrHp(currHp);
 
     [PunRPC]
     public void OnDamage(int dmg)
     {
         if (PhotonNetwork.IsMasterClient)
         {
-            currHp -= dmg;
+            SetCurrHp(currHp - dmg);
             if (effect != null)
                 effect.OnHitOnServer(dmg);
             photonView.RPC("ApplyHealth", RpcTarget.Others, currHp);
@@ -38,7 +46,7 @@ public abstract class Health : MonoBehaviourPun
 
         if (currHp <= 0)
         {
-            currHp = 0;
+            SetCurrHp(0);
             OnDie();
         }
     }

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BasicAttackGaugeUi : MonoBehaviour
+public class BasicAttackGaugeUi : FollowingObjectUi
 {
-    public Transform subject;
-    public float distanceFromSubjectPos = 1f;
     public BasicAttackController controller;
     public Slider slider;
     public GameObject borders;
@@ -21,9 +19,9 @@ public class BasicAttackGaugeUi : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    protected override void Update()
     {
+        base.Update();
         slider.value = controller.SavedRatio;
-        transform.position = subject.position + Camera.main.transform.up * distanceFromSubjectPos;
     }
 }
