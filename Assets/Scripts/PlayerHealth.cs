@@ -15,6 +15,12 @@ public class PlayerHealth : Health
     [PunRPC]
     protected override void OnDie()
     {
-        
+        transform.parent.gameObject.SetActive(false);
+        if (photonView.IsMine)
+        {
+            GameManager.instance.GameOver();
+            if (PhotonNetwork.CurrentRoom.PlayerCount == 2)
+                GameManager.instance.SendWinner();
+        }
     }
 }

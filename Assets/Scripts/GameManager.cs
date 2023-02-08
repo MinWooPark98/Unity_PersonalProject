@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -42,6 +43,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public GameObject loadingPanel;
     public GameObject startPanel;
     public GameObject resultPanel;
+    public TextMeshProUGUI resultText;
 
     private void Start()
     {
@@ -89,8 +91,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         loadingPanel.SetActive(false);
     }
 
+    public void GameOver()
+    {
+        resultPanel.SetActive(true);
+        resultText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}µî!";
+    }
+
+    public void SendWinner() => photonView.RPC("Win", RpcTarget.Others);
+
+    [PunRPC]
+    public void Win()
+    {
+        resultPanel.SetActive(true);
+        resultText.text = $"1µî!";
+    }
+
+    public void LeaveGame() => PhotonNetwork.LeaveRoom();
+
     public override void OnLeftRoom()
     {
-        PhotonNetwork.LoadLevel("Lobby");
+        PhotonNetwork.LoadLevel("LobbyScene");
     }
 }

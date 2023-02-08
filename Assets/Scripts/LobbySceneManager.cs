@@ -81,7 +81,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
         //if (PhotonNetwork.InRoom && PhotonNetwork.currenRooms.players == GameManager.instance.participants)
             //EnterGame();
-        if (Input.GetKeyDown(KeyCode.F))
+        if (Input.GetKeyDown(KeyCode.F1))
             EnterGame();
     }
 
