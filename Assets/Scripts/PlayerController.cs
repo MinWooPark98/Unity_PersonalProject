@@ -59,13 +59,11 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         skillController.attack.DoAttack = SkillAttackAnimPlay;
         skillController.Attackable = TakeSkillInput;
 
-        //moveStick.OnStickDrag.AddListener((dir) => { Move(dir.normalized) });
-        basicAttackStick.OnStickDrag.AddListener(basicController.ShowAttackRange);
         basicAttackStick.OnStickUp.AddListener((x, y) => { basicController.StopShowAttackRange(); });
         basicAttackStick.OnStickUp.AddListener(BasicAttack);
-        skillAttackStick.OnStickDrag.AddListener(skillController.ShowAttackRange);
         skillAttackStick.OnStickUp.AddListener((x, y) => { skillController.StopShowAttackRange(); });
         skillAttackStick.OnStickUp.AddListener(SkillAttack);
+
         skillAttackStick.gameObject.SetActive(false);
     }
 
@@ -74,6 +72,20 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
         skillAvailability.value = skillController.gaugeRatio;
+
+        if (basicAttackStick.isValid)
+            basicController.ShowAttackRange(basicAttackStick.touchPosVector3);
+        else if (basicAttackStick.isOnDrag)
+            basicController.StopShowAttackRange();
+
+        if (skillAttackStick.isValid)
+            skillController.ShowAttackRange(skillAttackStick.touchPosVector3);
+        else if (skillAttackStick.isOnDrag)
+            skillController.StopShowAttackRange();
+    }
+
+    private void FixedUpdate()
+    {
         Move();
     }
 
@@ -81,10 +93,10 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (playerInput.isMoving)
+            if (moveStick.isValid)
             {
                 animator.SetBool(HashMove, true);
-                var dir = new Vector3(playerInput.moveH, 0f, playerInput.moveV).normalized;
+                var dir = moveStick.touchPosVector3.normalized;
                 rb.velocity = dir * speed;
                 if (!isAttacking)
                     transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.LookRotation(dir),

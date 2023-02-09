@@ -12,6 +12,7 @@ public abstract class Attack : MonoBehaviourPun
     protected AttackFollowUp followUp;
     public Action DoAttack;
     public Action EndAttack;
+    private AttackIndicator indicator;
     protected IObjectPool<Projectile> projectilePool;
     protected IObjectPool<ParticleEffect> followUpEffectPool;
 
@@ -26,6 +27,7 @@ public abstract class Attack : MonoBehaviourPun
                 followUp = new Summon(attackBase.followUp);
                 break;
         }
+        GetIndicator();
 
         int maxCount = 3;
         switch (this)
@@ -114,21 +116,33 @@ public abstract class Attack : MonoBehaviourPun
         }
     }
 
-    public void ShowRange(Vector3 dir)
+    private void GetIndicator()
     {
-        AttackIndicator indicator = null;
         switch (this)
         {
             case FrontAttack:
                 indicator = GetComponent<FrontIndicator>();
-                indicator?.DrawRange(dir.normalized, this);
                 break;
             case RangeAttack:
                 indicator = GetComponent<RangeIndicator>();
-                indicator?.DrawRange(dir.normalized, this);
                 break;
             case ThrowAttack:
                 indicator = GetComponent<ThrowIndicator>();
+                break;
+        }
+    }
+
+    public void ShowRange(Vector3 dir)
+    {
+        switch (this)
+        {
+            case FrontAttack:
+                indicator?.DrawRange(dir.normalized, this);
+                break;
+            case RangeAttack:
+                indicator?.DrawRange(dir.normalized, this);
+                break;
+            case ThrowAttack:
                 indicator?.DrawRange(dir, this);
                 break;
         }
@@ -136,19 +150,6 @@ public abstract class Attack : MonoBehaviourPun
 
     public void StopShowRange()
     {
-        AttackIndicator indicator = null;
-        switch (this)
-        {
-            case FrontAttack:
-                indicator = GetComponent<FrontIndicator>();
-                break;
-            case RangeAttack:
-                indicator = GetComponent<RangeIndicator>();
-                break;
-            case ThrowAttack:
-                indicator = GetComponent<ThrowIndicator>();
-                break;
-        }
         indicator?.Clear();
     }
 }

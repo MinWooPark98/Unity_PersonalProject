@@ -30,15 +30,12 @@ public class RangeIndicator : AttackIndicator
         }
     }
 
-    // 시야 영역의 반지름과 시야 각도
     private float viewRadius;
     private float viewAngle;
 
-    // 마스크 2종
     public LayerMask targetMask, obstacleMask;
     public float meshResolution;
 
-    // Target mask에 ray hit된 transform을 보관하는 리스트
     public List<Transform> visibleTargets = new List<Transform>();
 
     Mesh viewMesh;
@@ -71,13 +68,11 @@ public class RangeIndicator : AttackIndicator
         viewMeshFilter.mesh = viewMesh;
     }
 
-    // y축 오일러 각을 3차원 방향 벡터로 변환한다.
-    // 원본과 구현이 살짝 다름에 주의. 결과는 같다.
     public Vector3 DirFromAngle(float angleDegrees, bool angleIsGlobal)
     {
         if (!angleIsGlobal)
         {
-            angleDegrees += Quaternion.LookRotation(lookDir).eulerAngles.y;//transform.eulerAngles.y;
+            angleDegrees += Quaternion.LookRotation(lookDir).eulerAngles.y;
         }
 
         return new Vector3(Mathf.Cos((-angleDegrees + 90) * Mathf.Deg2Rad), 0, Mathf.Sin((-angleDegrees + 90) * Mathf.Deg2Rad));
@@ -109,20 +104,17 @@ public class RangeIndicator : AttackIndicator
         var atkPosYInc = attacker.position + new Vector3(0f, 0.01f, 0f);
         for (int i = 0; i <= stepCount; i++)
         {
-            float angle = Quaternion.LookRotation(lookDir).eulerAngles.y/*transform.eulerAngles.y*/ - viewAngle / 2 + stepAngleSize * i;
+            float angle = Quaternion.LookRotation(lookDir).eulerAngles.y - viewAngle / 2 + stepAngleSize * i;
             ViewCastInfo newViewCast = ViewCast(atkPosYInc, angle);
 
-            // i가 0이면 prevViewCast에 아무 값이 없어 정점 보간을 할 수 없으므로 건너뛴다.
             if (i != 0)
             {
                 bool edgeDstThresholdExceed = Mathf.Abs(prevViewCast.dst - newViewCast.dst) > edgeDstThreshold;
 
-                // 둘 중 한 raycast가 장애물을 만나지 않았거나 두 raycast가 서로 다른 장애물에 hit 된 것이라면(edgeDstThresholdExceed 여부로 계산)
                 if (prevViewCast.hit != newViewCast.hit || (prevViewCast.hit && newViewCast.hit && edgeDstThresholdExceed))
                 {
                     Edge e = FindEdge(atkPosYInc, prevViewCast, newViewCast);
 
-                    // zero가 아닌 정점을 추가함
                     if (e.PointA != Vector3.zero)
                     {
                         viewPoints.Add(e.PointA);
@@ -164,6 +156,8 @@ public class RangeIndicator : AttackIndicator
     public override void Clear()
     {
         if (!photonView.IsMine)
+            return;
+        if (!isDrawing)
             return;
         viewMesh.Clear();
         viewMeshRenderer.enabled = false;

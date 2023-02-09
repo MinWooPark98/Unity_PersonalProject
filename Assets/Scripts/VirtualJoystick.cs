@@ -11,12 +11,13 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
     [NonSerialized] public Vector2 constantOrigin;
     [NonSerialized] public Vector2 currOrigin;
     [NonSerialized] public Vector2 touchPos;
+    public Vector3 touchPosVector3 { get => new Vector3(touchPos.x, 0f, touchPos.y); }
+    public bool isOnDrag { get; private set; } = false;
+    public bool isValid { get; private set; }
     public Image background;
     public Image controller;
     [Range(0f, 0.5f)]
     public float dragSensitive;
-    public UnityEvent OnStickDown;
-    public UnityEvent<Vector3> OnStickDrag;
     public UnityEvent<Vector3, float> OnStickUp;
 
     private void Start()
@@ -32,8 +33,7 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if (OnStickDown != null)
-            OnStickDown.Invoke();
+        isOnDrag = true;
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -47,16 +47,18 @@ public class VirtualJoystick : MonoBehaviour, IPointerDownHandler, IDragHandler,
             controller.rectTransform.anchoredPosition = new Vector2
                 (touchPos.x * background.rectTransform.sizeDelta.x * 0.5f, touchPos.y * background.rectTransform.sizeDelta.y * 0.5f);
         }
-        Vector3 touchPosV3 = new Vector3(touchPos.x, 0f, touchPos.y);
-        if (OnStickDrag != null)
-            OnStickDrag.Invoke(touchPosV3);
+        if (touchPos.magnitude >= dragSensitive)
+            isValid = true;
+        else
+            isValid = false;
     }
 
     public void OnPointerUp(PointerEventData eventData)
     {
-        Vector3 touchPosV3 = new Vector3(touchPos.x, 0f, touchPos.y);
-        if (OnStickUp != null)
-            OnStickUp.Invoke(touchPosV3.normalized, touchPosV3.magnitude);
+        isOnDrag = false;
+        if (OnStickUp != null && isValid)
+            OnStickUp.Invoke(touchPosVector3.normalized, touchPosVector3.magnitude);
+        isValid = false;
         touchPos = Vector2.zero;
         controller.rectTransform.anchoredPosition = Vector2.zero;
         currOrigin = constantOrigin;
