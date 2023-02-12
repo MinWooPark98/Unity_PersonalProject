@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513ffda8a8db7dd4db3a1edde311a21e, type: 3}
   m_Name: VeteranSkillAttack
   m_EditorClassIdentifier: 
+  character: 1
+  attackType: 1
   obtainGauge: 10
   distance: 10
   arrivalTime: 0.75

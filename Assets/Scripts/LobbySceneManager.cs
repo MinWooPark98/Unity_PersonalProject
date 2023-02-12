@@ -1,5 +1,6 @@
 using Photon.Pun;
 using Photon.Realtime;
+using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -20,14 +21,17 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     }
 
     public RawImage characterRenderer;
-    public int characterIndex { get; private set; } = 0;
+    public Characters character { get; private set; } = Characters.Bear;
     public Animator[] characterAnimators;
-    public Camera characterCamera;
+    public LobbyCharacterCamera characterCamera;
 
     private string gameVersion = "1";
     public Button participateButton;
     public TextMeshProUGUI connectMessage;
 
+    public GameObject characterPanel;
+    public GameObject characterDescPanel;
+    public GameObject attackInfoPanel;
     public GameObject lobbyPanel;
     public GameObject createPanel;
     public GameObject loadingPanel;
@@ -38,9 +42,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     // ·ë »ý¼º ½Ã¿¡¸¸ °ª Ã£¾Æ¿È
     public TMP_InputField roomName;
     public TMP_Dropdown maxPlayersDropdown;
-    private byte maxPlayers = 6;
     public TMP_Dropdown playTimeDropdown;
-    private int playTime = 180;
     //public Dropdown map;
 
     public GameObject rooms;
@@ -66,8 +68,6 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     private void Start()
     {
-        loadingPanel.SetActive(false);
-
         PhotonNetwork.GameVersion = gameVersion;
         PhotonNetwork.ConnectUsingSettings();
         participateButton.interactable = false;
@@ -77,23 +77,56 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
-            ShowPrevCharacter();
-        if (Input.GetKeyDown(KeyCode.D))
-            ShowNextCharacter();
+        if (Input.GetKeyDown(KeyCode.Escape))
+            Cancel();
     }
 
-    public void ShowPrevCharacter() => ShowIndexCharacter(characterIndex - 1);
-    public void ShowNextCharacter() => ShowIndexCharacter(characterIndex + 1);
+    public void ActivateCharacterPanel() => characterPanel.SetActive(true);
+    public void ActivateCharacterDescPanel() => characterDescPanel.SetActive(true);
+    public void ActivateAttackInfoPanel() => attackInfoPanel.SetActive(true);
+    public void ActivateCreatePanel() => createPanel.SetActive(true);
+
+    public void Cancel()
+    {
+        if (loadingPanel.activeSelf)
+            LeaveRoom();
+        else if (createPanel.activeSelf)
+            createPanel.SetActive(false);
+        else if (lobbyPanel.activeSelf)
+            LeaveLobby();
+        else if (attackInfoPanel.activeSelf)
+            attackInfoPanel.SetActive(false);
+        else if (characterDescPanel.activeSelf)
+            characterDescPanel.SetActive(false);
+        else if (characterPanel.activeSelf)
+        {
+            characterPanel.SetActive(false);
+            characterCamera.ShowCharacter((int)character);
+        }
+    }
+
+    public void Home()
+    {
+        characterPanel.SetActive(false);
+        characterDescPanel.SetActive(false);
+        attackInfoPanel.SetActive(false);
+        lobbyPanel.SetActive(false);
+        createPanel.SetActive(false);
+        loadingPanel.SetActive(false);
+        characterCamera.ShowCharacter((int)character);
+        if (PhotonNetwork.IsConnected)
+            PhotonNetwork.Disconnect();
+    }
 
     public void ShowIndexCharacter(int index)
     {
         if (index < 0 || index > (int)Characters.Count - 1)
             return;
-        characterAnimators[characterIndex].SetTrigger("Idle");
-        characterIndex = index;
-        characterAnimators[characterIndex].SetTrigger($"Action{UnityEngine.Random.Range(1, 4)}");
+        characterCamera.ShowCharacter(index);
+        characterAnimators[index].SetTrigger($"Action{UnityEngine.Random.Range(1, 4)}");
     }
+
+    public void SetCharacter(Characters character) => this.character = character;
 
     public void JoinRandomRoom()
     {
@@ -103,10 +136,20 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
             PhotonNetwork.ConnectUsingSettings();
     }
 
-    public void CreateRoom()
+    public void CreateCustomRoom()
     {
         var maxPlayers = byte.Parse(maxPlayersDropdown.options[maxPlayersDropdown.value].text);
         var playTime = int.Parse(playTimeDropdown.options[playTimeDropdown.value].text);
+        CreateRoom(maxPlayers, playTime, false);
+    }
+
+    public void CreateRandomRoom()
+    {
+        CreateRoom(6, 180, true);
+    }
+
+    private void CreateRoom(byte maxPlayers, int playTime, bool isRandomRoom)
+    {
         RoomOptions roomOptions = new RoomOptions();
         roomOptions.IsOpen = true;
         roomOptions.IsVisible = true;
@@ -115,7 +158,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         roomOptions.CustomRoomPropertiesForLobby = new string[] { "PlayTime" };
         //roomOptions.CustomRoomProperties = new ExitGames.Client.Photon.Hashtable() { { "Map", map } };
         //roomOptions.CustomRoomPropertiesForLobby = new string[] { "Map" };
-        PhotonNetwork.CreateRoom(roomName.text, roomOptions: roomOptions);
+        PhotonNetwork.CreateRoom(isRandomRoom ? string.Empty : roomName.text, roomOptions: roomOptions);
         Debug.Log("Create Room");
     }
 
@@ -133,8 +176,9 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void SaveSelectedData()
     {
-        PlayDataManager.instance.character = (Characters)characterIndex;
-        PlayDataManager.instance.playTime = playTime;
+        PlayDataManager.instance.character = character;
+        PlayDataManager.instance.playTime = 
+            PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("PlayTime") ? (int)PhotonNetwork.CurrentRoom.CustomProperties["PlayTime"] : 180f;
     }
 
     public void EnterGame()
@@ -142,7 +186,10 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         photonView.RPC("SaveSelectedData", RpcTarget.All);
         PhotonNetwork.IsMessageQueueRunning = false;
         if (PhotonNetwork.IsMasterClient)
+        {
+            PhotonNetwork.CurrentRoom.IsOpen = false;
             PhotonNetwork.LoadLevel("PlayScene");
+        }
     }
 
     public override void OnConnectedToMaster()
@@ -175,7 +222,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
 
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
-        PhotonNetwork.CreateRoom("TEST", new RoomOptions() { MaxPlayers = maxPlayers, IsVisible = true });
+        CreateRandomRoom();
         Debug.Log(message + "\nCreate Room");
     }
 
@@ -193,8 +240,6 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
     {
         Debug.Log($"Joined Room : { PhotonNetwork.CurrentRoom.Name }");
         loadingPanel.SetActive(true);
-        maxPlayers = PhotonNetwork.CurrentRoom.MaxPlayers;
-        playTime = PhotonNetwork.CurrentRoom.CustomProperties.ContainsKey("PlayTime") ? (int)PhotonNetwork.CurrentRoom.CustomProperties["PlayTime"] : playTime;
         connectMessage.text = $"{PhotonNetwork.CurrentRoom.PlayerCount} / {PhotonNetwork.CurrentRoom.MaxPlayers}";
     
         if (PhotonNetwork.IsMasterClient)
@@ -238,7 +283,7 @@ public class LobbySceneManager : MonoBehaviourPunCallbacks
         RoomButton roomButton = null;
         foreach (var room in roomList)
         {
-            if (room.RemovedFromList)
+            if (room.RemovedFromList || !room.IsOpen)
             {
                 roomDict.TryGetValue(room.Name, out roomButton);
                 if (roomButton != null)

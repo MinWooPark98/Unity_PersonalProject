@@ -6,4 +6,9 @@ using UnityEngine;
 public class ThrowAttackBase : AttackBase
 {
     public float throwHeight;
+
+    public ThrowAttackBase()
+    {
+        attackShape = AttackShape.Throw;
+    }
 }

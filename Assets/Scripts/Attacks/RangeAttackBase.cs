@@ -7,4 +7,9 @@ public class RangeAttackBase : AttackBase
 {
     public int maxCount;
     public float angle;
+
+    public RangeAttackBase()
+    {
+        attackShape = AttackShape.Range;
+    }
 }

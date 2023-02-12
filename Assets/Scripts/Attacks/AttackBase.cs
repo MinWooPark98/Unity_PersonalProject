@@ -5,8 +5,23 @@ using UnityEngine.Events;
 
 public abstract class AttackBase : ScriptableObject
 {
+    public enum AttackType
+    {
+        Basic,
+        Skill,
+    }
+    public enum AttackShape
+    {
+        None = -1,
+        Front,
+        Range,
+        Throw,
+    }
+    public Characters character;
+    public AttackType attackType;
+    public AttackShape attackShape { get; protected set; } = AttackShape.None;
     public int obtainGauge;
-    public float distance;
+    public int distance;
     public float arrivalTime;
     public int damage;
     public int growthDamage;

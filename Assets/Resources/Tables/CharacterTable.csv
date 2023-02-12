@@ -1,0 +1,4 @@
+ID,Name,Desc,Sprite,Difficulty,BasicAttackName,BasicAttackDesc,SkillAttackName,SkillAttackDesc
+0,베어,베어 설명,Sprites/Bear,어려움,연발사격,전방의 적을 향해 다수의 탄환을 발사한다,초고속사격,스킬설명
+1,베테랑,베테랑 설명,Sprites/Veteran,보통,베테랑 평타,베테랑 평타 설명,베테랑 스킬,베테랑 스킬 설명
+2,군인,군인 설명,Sprites/Soldier,쉬움,군인 평타,군인 평타 설명,군인 스킬,군인 스킬 설명

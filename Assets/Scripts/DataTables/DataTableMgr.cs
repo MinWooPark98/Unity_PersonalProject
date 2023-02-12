@@ -11,6 +11,7 @@ public class DataTableMgr
     public static void LoadAll()
     {
         tables.Add(typeof(HealthData), new DataTable<HealthData>("Tables/HealthTable"));
+        tables.Add(typeof(CharacterData), new DataTable<CharacterData>("Tables/CharacterTable"));
         isLoaded = true;
     }
 

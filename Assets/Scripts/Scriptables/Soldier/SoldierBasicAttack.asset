@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513ffda8a8db7dd4db3a1edde311a21e, type: 3}
   m_Name: SoldierBasicAttack
   m_EditorClassIdentifier: 
+  character: 2
+  attackType: 0
   obtainGauge: 40
   distance: 10
   arrivalTime: 1
   damage: 5
   growthDamage: 2
   isPenetrable: 0
+  isBreakable: 0
   afterDelay: 0.3
   followUp: {fileID: 11400000, guid: 2684039ba312df449849462584f37d47, type: 2}
   projectile: {fileID: 3415746808101508657, guid: abc933e1eaef0214d88944dc02b5a3a3, type: 3}

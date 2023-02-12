@@ -12,12 +12,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 513ffda8a8db7dd4db3a1edde311a21e, type: 3}
   m_Name: VeteranBasicAttack
   m_EditorClassIdentifier: 
+  character: 1
+  attackType: 0
   obtainGauge: 10
   distance: 10
   arrivalTime: 1
   damage: 10
   growthDamage: 2
   isPenetrable: 1
+  isBreakable: 0
   afterDelay: 0.2
   followUp: {fileID: 0}
   projectile: {fileID: 5806041901442337587, guid: 20194a67152139c44a1bba546f3fec20, type: 3}

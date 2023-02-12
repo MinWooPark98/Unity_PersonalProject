@@ -12,6 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99115e7f7370c5349b18b16322b7bae6, type: 3}
   m_Name: BearSkillAttack
   m_EditorClassIdentifier: 
+  character: 0
+  attackType: 1
   obtainGauge: 10
   distance: 10
   arrivalTime: 1

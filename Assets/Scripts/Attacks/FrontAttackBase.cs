@@ -7,4 +7,9 @@ public class FrontAttackBase : AttackBase
 {
     public int maxCount;
     public float interval;
+
+    public FrontAttackBase()
+    {
+        attackShape = AttackShape.Front;
+    }
 }
