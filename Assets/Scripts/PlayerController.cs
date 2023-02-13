@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
             return;
         skillAvailability.value = skillController.gaugeRatio;
 
+        
+
         if (basicAttackStick.isValid)
             basicController.ShowAttackRange(basicAttackStick.touchPosVector3);
         else if (basicAttackStick.isOnDrag)

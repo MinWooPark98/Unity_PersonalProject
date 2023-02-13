@@ -1,6 +1,7 @@
 using Photon.Pun;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -39,6 +40,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     public LineRenderer throwLine;
     public Vector2 mapSize;
     public ShowDamageLancher showDamageLauncher;
+    public List<HideOnBush> bushes = new List<HideOnBush>();
 
     public GameObject loadingPanel;
     public GameObject startPanel;
@@ -51,6 +53,11 @@ public class GameManager : MonoBehaviourPunCallbacks
         playTimer = 0f;
         var player = PhotonNetwork.Instantiate(playerPrefabs[(int)PlayDataManager.instance.character].name, Vector3.zero, Quaternion.identity);
         PhotonNetwork.IsMessageQueueRunning = true;
+        var bushesGO = GameObject.FindGameObjectsWithTag("Bush");
+        foreach (var bush in bushesGO)
+        {
+            bushes.Add(bush.GetComponent<HideOnBush>());
+        }
         if (PhotonNetwork.IsMasterClient)
             StartCoroutine(CheckAllLoaded());
     }
