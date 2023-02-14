@@ -586,6 +586,7 @@ GameObject:
   - component: {fileID: 8875909308143005960}
   - component: {fileID: 8376839690871198856}
   - component: {fileID: 717595660155979929}
+  - component: {fileID: 4634022409840596423}
   m_Layer: 0
   m_Name: Bear
   m_TagString: Player
@@ -887,6 +888,24 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 30b8ea225023c0f42b220e6d7ca706dd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &4634022409840596423
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8871164100823816541}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fd98c5fec51664b889ab59a4c45aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHiding: 0
+  renderers:
+  - {fileID: 8871164102160602826}
+  - {fileID: 8871164100687967714}
+  - {fileID: 3272174312236664198}
+  canvas: {fileID: 2216300437037339188}
 --- !u!1 &8871164100835994550
 GameObject:
   m_ObjectHideFlags: 0
@@ -2510,7 +2529,7 @@ PrefabInstance:
     - target: {fileID: 7996448037235447841, guid: 580b6ae9fcdf66c489039f8642c49401, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 4285055268611437611, guid: 3af9658f748406f49baeab0e0466105e, type: 2}
+      objectReference: {fileID: 4285055268611437611, guid: 0c0fdfc5e6ad7374eaa1d3c9c157b588, type: 2}
     - target: {fileID: 7996448037235447841, guid: 580b6ae9fcdf66c489039f8642c49401, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0
@@ -2933,6 +2952,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2cecb33133bf7b249b23daad68d0df10, type: 3}
+--- !u!137 &3272174312236664198 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 5416553806754953150, guid: 2cecb33133bf7b249b23daad68d0df10, type: 3}
+  m_PrefabInstance: {fileID: 7368574872805274168}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &3272174312249971874 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5416553806760257178, guid: 2cecb33133bf7b249b23daad68d0df10, type: 3}

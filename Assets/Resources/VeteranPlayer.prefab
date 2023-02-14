@@ -944,6 +944,7 @@ GameObject:
   - component: {fileID: 212004697652861624}
   - component: {fileID: 8862455263604306461}
   - component: {fileID: 1574404133039193398}
+  - component: {fileID: 3611761396807179909}
   m_Layer: 0
   m_Name: Veteran
   m_TagString: Player
@@ -1239,6 +1240,24 @@ MonoBehaviour:
   obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+--- !u!114 &3611761396807179909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 27067185847135694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65fd98c5fec51664b889ab59a4c45aca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isHiding: 0
+  renderers:
+  - {fileID: 27067184961104092}
+  - {fileID: 27067186510099000}
+  - {fileID: 27067186668702554}
+  canvas: {fileID: 1352719898898292915}
 --- !u!1 &27067185886301020
 GameObject:
   m_ObjectHideFlags: 0
@@ -2375,7 +2394,7 @@ PrefabInstance:
     - target: {fileID: 7996448037235447841, guid: 580b6ae9fcdf66c489039f8642c49401, type: 3}
       propertyPath: m_sharedMaterial
       value: 
-      objectReference: {fileID: 4285055268611437611, guid: 3af9658f748406f49baeab0e0466105e, type: 2}
+      objectReference: {fileID: 4285055268611437611, guid: 0c0fdfc5e6ad7374eaa1d3c9c157b588, type: 2}
     - target: {fileID: 7996448037235447841, guid: 580b6ae9fcdf66c489039f8642c49401, type: 3}
       propertyPath: m_hasFontAssetChanged
       value: 0

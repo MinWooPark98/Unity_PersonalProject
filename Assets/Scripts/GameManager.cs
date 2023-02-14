@@ -67,6 +67,10 @@ public class GameManager : MonoBehaviourPunCallbacks
         if (!allPlayersLoaded)
             return;
         playTimer = Time.time - startTime;
+        if (Input.GetKeyDown(KeyCode.Escape))
+            LeaveGame();
+        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
+            Win();
     }
 
     private IEnumerator CheckAllLoaded()
@@ -104,9 +108,6 @@ public class GameManager : MonoBehaviourPunCallbacks
         resultText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}µî!";
     }
 
-    public void SendWinner() => photonView.RPC("Win", RpcTarget.Others);
-
-    [PunRPC]
     public void Win()
     {
         resultPanel.SetActive(true);
