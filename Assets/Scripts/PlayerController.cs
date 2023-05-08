@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>();
         animator = GetComponent<Animator>();
+        if (!photonView.IsMine)
+            return;
         moveStick = GameObject.FindWithTag("MoveJoyStick").GetComponent<VirtualJoystick>();
         basicAttackStick = GameObject.FindWithTag("AttackJoyStick").GetComponent<VirtualJoystick>();
         skillAttackStick = GameObject.FindWithTag("SkillJoyStick").GetComponent<VirtualJoystick>();
@@ -72,8 +74,6 @@ public class PlayerController : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             return;
         skillAvailability.value = skillController.gaugeRatio;
-
-        
 
         if (basicAttackStick.isValid)
             basicController.ShowAttackRange(basicAttackStick.touchPosVector3);

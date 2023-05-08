@@ -29,17 +29,21 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     private bool allPlayersLoaded = false;
     private int loadedPlayers;
+    private bool isLoaded = false;
     private float startTime;
     private float playTime;
     private float playTimer;
     public float GameProgress { get => playTimer / playTime; }
     public GameObject[] playerPrefabs;   // 임시 - 온라인으로 바꾸면 캐릭터들 prefab 전부 가진 후에 플레이어들이 선택한 캐릭터 생성
+    private GameObject myPlayer;
     public GameObject frontArea;
     public GameObject rangeArea;
     public SpriteRenderer throwArea;
     public LineRenderer throwLine;
     public Vector2 mapSize;
     public ShowDamageLancher showDamageLauncher;
+    public GameObject grid;
+    private bool gridRebooted = false;
     public List<HideOnBush> bushes = new List<HideOnBush>();
 
     public GameObject loadingPanel;
@@ -51,7 +55,7 @@ public class GameManager : MonoBehaviourPunCallbacks
     {
         playTime = PlayDataManager.instance.playTime;
         playTimer = 0f;
-        var player = PhotonNetwork.Instantiate(playerPrefabs[(int)PlayDataManager.instance.character].name, Vector3.zero, Quaternion.identity);
+        myPlayer = PhotonNetwork.Instantiate(playerPrefabs[(int)PlayDataManager.instance.character].name, Vector3.zero, Quaternion.identity);
         PhotonNetwork.IsMessageQueueRunning = true;
         var bushesGO = GameObject.FindGameObjectsWithTag("Bush");
         foreach (var bush in bushesGO)
@@ -69,43 +73,75 @@ public class GameManager : MonoBehaviourPunCallbacks
         playTimer = Time.time - startTime;
         if (Input.GetKeyDown(KeyCode.Escape))
             LeaveGame();
-        if (PhotonNetwork.CurrentRoom.PlayerCount == 1)
-            Win();
     }
 
     private IEnumerator CheckAllLoaded()
     {
+        isLoaded = true;
+        loadedPlayers = 1;
         while (true)
         {
-            loadedPlayers = 1;
             photonView.RPC("SendLoaded", RpcTarget.Others);
             yield return new WaitForSeconds(1f);
             if (loadedPlayers == PhotonNetwork.CurrentRoom.PlayerCount)
             {
-                photonView.RPC("StartPlay", RpcTarget.All);
+                photonView.RPC("StartPlay", RpcTarget.All, loadedPlayers);
                 break;
             }
         }
     }
 
     [PunRPC]
-    public void SendLoaded() => photonView.RPC("LoadedCount", RpcTarget.MasterClient);
+    private void SendLoaded()
+    {
+        if (isLoaded)
+            return;
+        if (myPlayer != null)
+        {
+            photonView.RPC("LoadedCount", RpcTarget.MasterClient);
+            isLoaded = true;
+        }
+    }
 
     [PunRPC]
     private void LoadedCount() => ++loadedPlayers;
 
     [PunRPC]
-    public void StartPlay()
+    public void StartPlay(int loadedPlayers)
     {
+        this.loadedPlayers = loadedPlayers;
         allPlayersLoaded = true;
         startTime = Time.time;
+        RebootGrid();
+        StartCoroutine(ShowStartPanel());
+    }
+
+    private IEnumerator ShowStartPanel()
+    {
         loadingPanel.SetActive(false);
+        startPanel.SetActive(true);
+        yield return new WaitForSeconds(1f);
+        startPanel.SetActive(false);
     }
 
     public void GameOver()
     {
+        if (!isLoaded)
+            return;
+        isLoaded = false;
         resultPanel.SetActive(true);
-        resultText.text = $"{PhotonNetwork.CurrentRoom.PlayerCount}등!";
+        resultText.text = $"{loadedPlayers}등!";
+        photonView.RPC("SubPlayerCount", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    private void SubPlayerCount()
+    {
+        if (!isLoaded)
+            return;
+        --loadedPlayers;
+        if (loadedPlayers < 2)
+            Win();
     }
 
     public void Win()
@@ -114,10 +150,25 @@ public class GameManager : MonoBehaviourPunCallbacks
         resultText.text = $"1등!";
     }
 
-    public void LeaveGame() => PhotonNetwork.LeaveRoom();
+    public void LeaveGame()
+    {
+        photonView.RPC("SubPlayerCount", RpcTarget.Others);
+        loadingPanel.SetActive(true);
+        PhotonNetwork.LeaveRoom();
+    }
 
     public override void OnLeftRoom()
     {
         PhotonNetwork.LoadLevel("LobbyScene");
+    }
+
+    [PunRPC]
+    public void RebootGrid()
+    {
+        if (gridRebooted)
+            return;
+        gridRebooted = true;
+        grid.SetActive(false);
+        grid.SetActive(true);
     }
 }

@@ -41,8 +41,8 @@ public class PlayerHide : MonoBehaviourPun
     public void InBush()
     {
         isInBush = true;
-        if (photonView.IsMine)
-            return;
+        //if (photonView.IsMine)
+        //    return;
     }
     public void HideOnOthers() => photonView.RPC("Hide", RpcTarget.Others);
     public void HideOnOther(Photon.Realtime.Player player) => photonView.RPC("Hide", player);
@@ -69,8 +69,8 @@ public class PlayerHide : MonoBehaviourPun
     public void OutOfBush()
     {
         isInBush = false;
-        if (photonView.IsMine)
-            return;
+        //if (photonView.IsMine)
+        //    return;
     }
     public void RevealOnOthers() => photonView.RPC("Reveal", RpcTarget.Others);
     public void RevealOnOther(Photon.Realtime.Player player) => photonView.RPC("Reveal", player);

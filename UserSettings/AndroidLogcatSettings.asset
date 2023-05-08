@@ -3,7 +3,7 @@
     "m_SelectedPackage": {
         "deviceId": "R39M10EW0FM",
         "name": "com.Kyungil.PMW_BattleRoyal",
-        "processId": 31828,
+        "processId": 26649,
         "exited": false
     },
     "m_SelectedPriority": 0,
@@ -30,6 +30,12 @@
             "deviceId": "R39M10EW0FM",
             "name": "com.Kyungil.PMW_BattleRoyal",
             "processId": 31828,
+            "exited": true
+        },
+        {
+            "deviceId": "R39M10EW0FM",
+            "name": "com.Kyungil.PMW_BattleRoyal",
+            "processId": 26649,
             "exited": false
         }
     ],

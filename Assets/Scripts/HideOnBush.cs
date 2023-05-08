@@ -20,6 +20,7 @@ public class HideOnBush : MonoBehaviour
         var playerHide = other.GetComponent<PlayerHide>();
         if (playerHide != null)
         {
+            playerHide.InBushOnServer();
             var playerPV = other.GetComponent<PhotonView>();
             if (playerPV != null && playerPV.IsMine)
             {
@@ -27,10 +28,7 @@ public class HideOnBush : MonoBehaviour
                 foreach (var bush in bushes)
                 {
                     if (Vector3.Distance(bush.transform.position, transform.position) < 2.1f)
-                    {
-                        playerHide.InBushOnServer();
                         bush.HideOn();
-                    }
                 }
             }
         }
@@ -41,6 +39,7 @@ public class HideOnBush : MonoBehaviour
         var playerHide = other.GetComponent<PlayerHide>();
         if (playerHide != null)
         {
+            playerHide.OutOfBushOnServer();
             var playerPV = other.GetComponent<PhotonView>();
             if (playerPV != null && playerPV.IsMine)
             {
@@ -48,10 +47,7 @@ public class HideOnBush : MonoBehaviour
                 foreach (var bush in bushes)
                 {
                     if (Vector3.Distance(bush.transform.position, transform.position) < 2.1f)
-                    {
-                        playerHide.OutOfBushOnServer();
                         bush.HideOff();
-                    }
                 }
             }
         }
